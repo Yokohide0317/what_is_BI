@@ -1,0 +1,148 @@
+---
+layout: ../layouts/Lesson.astro
+---
+import MarketLab from '../components/MarketLab';
+import Knockdown from '../components/Knockdown';
+import VolcanoLab from '../components/VolcanoLab';
+
+<section id="market">
+<div className="section-number">01 <span>身近なところから</span></div>
+
+## 前月より今月、何が売れている？
+
+スーパーの販売個数を見てみましょう。カレールーは前月の100個から、今月は150個へ。**50%増えています。** それだけでなく、たまねぎ、じゃがいも、にんじんも増えています。
+
+「カレーに使う商品が、まとめて伸びているのかもしれない」。一つの商品だけでは気づかなかった問いが、関連する商品を並べると見えてきます。
+
+<div className="intro-table">
+
+| 商品 | 前月の個数 | 今月の個数 | 増減 |
+| :-- | --: | --: | --: |
+| カレールー | 100 | 150 | +50% |
+| たまねぎ | 200 | 270 | +35% |
+| じゃがいも | 200 | 260 | +30% |
+| にんじん | 100 | 125 | +25% |
+| 牛乳 | 200 | 210 | +5% |
+| パン | 200 | 190 | −5% |
+
+</div>
+<p className="caption">架空の販売個数。全12商品のうち6商品を抜粋。売上金額ではなく個数を使い、値上げの影響を混ぜないようにしています。</p>
+
+<div className="callout"><strong>ただし、原因までは分かりません。</strong><p>特売、季節、来店客数の変化でも説明できます。「カレー関連の商品が増えた」は観察であって、「カレーの流行が原因だ」という証明ではありません。</p></div>
+</section>
+
+<section id="sets">
+<div className="section-number">02 <span>遺伝子セットへの入口</span></div>
+
+## 「集まり」は、結果を見る前に決める。
+
+ここでは「カレーの材料」「シチューの材料」「朝食の商品」という3つのセットを、先に用意します。たまねぎはカレーにもシチューにも入ります。**セット同士は重なっていてかまいません。**
+
+<div className="set-cards"><div><h3>カレーの材料</h3><p>カレールー · たまねぎ<br />じゃがいも · にんじん</p><span>4商品</span></div><div><h3>シチューの材料</h3><p>シチュールー · たまねぎ<br />じゃがいも · にんじん · 牛乳</p><span>5商品</span></div></div>
+
+売れた商品だけを後から集めて「カレーセット」と名づけると、「増えたものが多い」のは当たり前になってしまいます。実際の**遺伝子セット**も、既知の機能や過去の研究などを根拠に定義された、遺伝子の集まりです。
+
+この教材の料理セットは説明用の小さな定義です。すべての食材やレシピを網羅するものではありません。
+</section>
+
+<section id="enrichment">
+<div className="section-number">03 <span>表と曲線で考える</span></div>
+
+## 集まりの「偏り」を、二通りで見る。
+
+### 上位を選ぶ方法
+
+増加率の上位4商品だけを見ると、カレーの材料は4つとも含まれます。一方、全12商品のなかでは4商品。**全体での割合と、選んだ商品のなかでの割合を比べる**のが、過剰代表解析（ORA）の入口です。
+
+「上位」をどこで区切るかで結果は変わります。ここでは割合だけを比べ、統計的な検定はしていません。比較の土台は、表示している全12商品です。
+
+### 順位全体を見る方法
+
+上位だけを切り取らず、12商品すべてを増減率で並べます。セットの商品に出会ったら上がり、それ以外なら下がる。この曲線で、セットが順位のどちら側に集まっているかを見ます。これが**GSEA（遺伝子セットエンリッチメント解析）**につながる考え方です。
+
+<MarketLab client:load />
+
+<div className="callout"><strong>横軸は「順位」。時間ではありません。</strong><p>ここでは重みなしの簡略スコアを使います。本来のGSEAでは順位指標による重みづけや、置換による評価などを行います。この曲線から論文のNESやFDRは計算していません。</p></div>
+</section>
+
+<section id="genes">
+<div className="section-number">04 <span>生活の例から、細胞の実験へ</span></div>
+
+## 商品を、遺伝子に置き換える。
+
+スーパーで見ていた関係を、細胞のなかに置き換えてみましょう。
+
+<div className="mapping"><div><span>商品</span><b aria-hidden="true">→</b><strong>遺伝子</strong></div><div><span>販売個数の比較</span><b aria-hidden="true">→</b><strong>RNA量の比較</strong></div><div><span>料理の材料セット</span><b aria-hidden="true">→</b><strong>機能が関連する遺伝子セット</strong></div></div>
+
+**RNA-seq**は、細胞などから得たRNAを配列として読み、どの遺伝子のRNAがどれくらいあるかを調べる方法です。試料間の比較では、読み取った総量などの違いを考慮した補正（正規化）が必要です。
+
+ただし、RNA量はタンパク質の量や働きそのものではありません。RNAからタンパク質が作られる過程や、その後の分解などによっても変わります。
+
+### shRNAで「減らす」とは？
+
+DNAの情報からmRNAが作られ、mRNAをもとにタンパク質が作られます。shRNAは細胞内で処理され、標的のmRNAを減らす仕組みに利用されます。
+
+<Knockdown client:load />
+
+**ノックダウン**は、遺伝子産物の量を下げる操作です。DNAそのものを消す操作とは区別します。後で読む論文のshCaNは、カルシニューリンのCaN Aαを減らすためのshRNAであり、**E2F1を直接狙うshRNAではありません。**
+</section>
+
+<section id="volcano">
+<div className="section-number">05 <span>一つひとつの遺伝子を見る</span></div>
+
+## 表の1行が、プロットの1点になる。
+
+ボルケーノプロットは、たくさんの遺伝子の変化を一枚に並べた図です。**1点は1遺伝子。** 横軸で変化の方向と大きさ、縦軸で統計的な指標を読みます。
+
+<div className="axis-cards"><div><span>横軸</span><h3>log₂ fold change</h3><p>ここでは条件B ÷ 対照A。+1なら2倍、−1なら半分です。</p></div><div><span>縦軸</span><h3>−log₁₀ 調整済みp値</h3><p>上に行くほど調整済みp値が小さくなります。</p></div></div>
+
+<VolcanoLab client:load />
+
+**上にあるほど、生物学的に重要という意味ではありません。** p値は、差がないという仮定と検定の前提のもとで、観測された差以上に極端な結果が出る確率です。「差がない確率」そのものではありません。多くの遺伝子を同時に調べるため、ここではBenjamini–Hochberg（BH）法でp値を調整しています。
+
+スーパーの「前月・今月の合計値が1つずつ」というデータだけから、妥当なp値を作ることはできません。そのため、この図には別に生成した反復のある人工データを使っています。
+</section>
+
+<section id="paper">
+<div className="section-number">06 <span>原論文へ戻る</span></div>
+
+## 図5を、条件 → 凡例 → 分布 → 結論の順に。
+
+Satoらの論文（PNAS, 2024）では、ヒト乳がん由来のMCF7細胞を使って、カルシニューリンとE2F1の関係を調べています。E2F1は、遺伝子の発現を調節する**転写因子**の一つです。
+
+<a className="paper-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11474076/#fig05"><span><small>原論文 · Figure 5</small><strong>CaN Aαを減らすと、何が変わる？</strong></span><span aria-hidden="true">↗</span></a>
+
+<ol className="reading-steps"><li><strong>条件を確かめる</strong><p>CaN AαをノックダウンしたMCF7細胞と、対照の細胞を比較しています。操作した対象と、測定した対象を分けて読みます。</p></li><li><strong>凡例を読む</strong><p>図5Bの赤い点は、Hallmark E2F標的遺伝子です。「赤＝有意差あり」ではありません。色の意味は図ごとに確認します。</p></li><li><strong>分布を見る</strong><p>図5Bで個々の遺伝子の変化を確認し、図5C–Eで遺伝子セット全体の偏りを見ます。比較の向きと順位指標を確かめてから、曲線の向きを読みます。</p></li><li><strong>言える範囲を区切る</strong><p>著者らは、CaN Aαを減らすとE2F標的遺伝子群の発現が低下することを示しています。ただし、発現の変化だけでは、直接結合やタンパク質分解の仕組みまで証明できません。</p></li></ol>
+
+図5C–Eの**NES**は正規化されたエンリッチメントスコア、**FDR**は偽発見率に関する指標です。これらは解析対象全体や解析条件に基づきます。一部の遺伝子を抜き出した小さな表から、論文の値を再現することはできません。
+
+<p className="caption">ここでは論文図を転載せず、原文へリンクしています。操作教材は論文の再解析ではありません。図5の説明は本文・図注に基づきます。</p>
+</section>
+
+<section id="review">
+<div className="section-number">07 <span>自分の言葉で確かめる</span></div>
+
+## 一つの変化と、集まりの変化。
+
+**「どの遺伝子が変わったか」と「どんな遺伝子群が偏っているか」は、別の問いです。** 両方の見方を行き来すると、図から言えることと、まだ言えないことを分けて考えられます。
+
+<div className="questions"><details><summary>カレーの材料が上位に多い。流行が原因と言える？</summary><p>言い切れません。偏りは観察できても、特売や季節など別の説明が残ります。原因を区別するには別の情報が必要です。</p></details><details><summary>過剰代表解析とGSEAは、どこが違う？</summary><p>過剰代表解析は、選んだ遺伝子群にセットの遺伝子が多いかを背景全体と比べます。GSEAは、順位をつけた遺伝子全体のなかでセットが偏っているかを見ます。</p></details><details><summary>shCaNは、E2F1のDNAを消す操作？</summary><p>違います。CaN Aαを標的としてmRNAを減らす仕組みを利用する操作です。E2F1を直接標的にするものでも、DNAを消すものでもありません。</p></details><details><summary>ボルケーノの赤い点は、必ず有意差がある？</summary><p>色の意味は凡例によります。原論文の図5BではHallmark E2F標的遺伝子を示しています。点の高さと色の意味は別です。</p></details></div>
+</section>
+
+<section id="glossary" className="reference-section">
+
+## 用語
+
+<dl className="glossary"><div><dt>遺伝子セット</dt><dd>既知の機能や過去の研究などに基づいて定義した遺伝子の集まり。セット同士は重なってよい。</dd></div><div><dt>ノックダウン</dt><dd>特定の遺伝子産物の量を減らす操作。遺伝子のDNAをなくすこととは異なる。</dd></div><div><dt>RNA-seq</dt><dd>RNAを配列として読み取り、遺伝子の発現量などを調べる方法。</dd></div><div><dt>エンリッチメント</dt><dd>比較の基準に対して、ある集まりが相対的に多く含まれることや、順位の片側に偏ること。</dd></div><div><dt>調整済みp値</dt><dd>多数の検定を行うことを考慮して調整したp値。効果の大きさや生物学的な重要度とは別の指標。</dd></div><div><dt>NES / FDR</dt><dd>NESは正規化されたエンリッチメントスコア。FDRは、発見とした結果の中に誤った発見が含まれる割合に関する指標。</dd></div></dl>
+</section>
+
+<section id="sources" className="reference-section">
+
+## 出典とデータについて
+
+1. Sato Y, et al. *Calcineurin-mediated dephosphorylation stabilizes E2F1 protein by suppressing binding of the FBXW7 ubiquitin ligase subunit.* PNAS 121, e2414618121 (2024). [原論文（DOI）](https://doi.org/10.1073/pnas.2414618121) · [全文・図5](https://pmc.ncbi.nlm.nih.gov/articles/PMC11474076/#fig05)
+2. [GSEA User Guide](https://docs.gsea-msigdb.org/GSEA/GSEA_User_Guide/) — 解析方法と結果の読み方。
+3. [DRA011729](https://ddbj.nig.ac.jp/resource/sra-submission/DRA011729) — 原論文で参照されるRNA-seqデータ。本教材には取り込んでいません。
+
+スーパーの12商品とセット定義は架空です。ボルケーノの48遺伝子は生成条件を明示した人工データで、実在の遺伝子名を使っていません。掲載した模式図は本教材用に作成しています。論文の図・実測データ・MSigDBの遺伝子セットの再配布は行っていません。
+</section>
