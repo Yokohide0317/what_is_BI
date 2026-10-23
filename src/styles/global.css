@@ -631,6 +631,9 @@ select {
   left: 0;
   background: #eef2e9;
 }
+.expression-counts caption {
+  text-align: left;
+}
 .expression-counts td,
 .expression-counts th {
   padding: 9px 14px;
@@ -1173,7 +1176,7 @@ footer > a:last-child {
   color: #718264;
 }
 @media (min-width: 1280px) {
-  .market-body {
+  .ranking-body {
     display: grid;
     grid-template-columns: 1fr 1.15fr;
     align-items: start;
@@ -1308,6 +1311,7 @@ footer > a:last-child {
 }
 @media (max-width: 760px) {
   .lesson-title { margin: 0 24px; padding-top: 28px; }
+  .lesson-title h1 { font-size: 22px; }
   .contents { max-height: none; overflow: visible; }
   .ranking-body { padding: 0 14px 18px; }
   .score-panel svg text, .volcano-chart.wide-chart text {

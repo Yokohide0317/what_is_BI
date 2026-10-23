@@ -31,6 +31,18 @@ GitHub Actionsでもテスト・ESLint（TS/TSXとJSXアクセシビリティ）
 このリポジトリにデプロイの自動化・外部サービス設定は含めていません。
 本文フォントはGoogle Fontsから取得し、接続できない場合はシステムフォントで表示します。
 
+## 日本語の本文を確認する
+
+本文、UI、README、PR説明の日本語を書く・レビューするときは、[natural-japanese の SKILL.md](.agents/skills/natural-japanese/SKILL.md)を読み、そこにあるレビュー手順を使います。科学的な意味、数値データ、不確実性は変えません。
+
+補助的な日本語検査は `uv` で実行できます。
+
+```sh
+uv run .agents/skills/natural-japanese/scripts/lint.py path/to/draft.md --genre tech
+```
+
+導入元と固定した upstream commit は[導入元情報](.agents/skills/natural-japanese/UPSTREAM.md)に記録しています。
+
 ## 教材データ
 
 - スーパーの48商品とセットは架空です。同じ店舗の冬・夏、各30日間の販売個数を比較します。序論だけで使い、p値は計算しません。

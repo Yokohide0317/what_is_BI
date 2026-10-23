@@ -3,7 +3,7 @@ import genes from '../data/genes.json';
 ---
 <div class="table-scroll count-table expression-counts" role="region" aria-label="人工発現量：全48遺伝子、各条件6反復" tabindex="0">
   <table>
-    <caption>人工データ · 全48遺伝子 · 各条件6反復</caption>
+    <caption>人工データ</caption>
     <thead><tr><th scope="col">遺伝子</th>{['A', 'B'].flatMap(condition => Array.from({ length: 6 }, (_, i) => <th scope="col">{condition}{i + 1}</th>))}</tr></thead>
     <tbody>{genes.map(gene => <tr><th scope="row">{gene.id}</th>{[...gene.control, ...gene.treated].map(value => <td>{value}</td>)}</tr>)}</tbody>
   </table>
