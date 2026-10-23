@@ -1121,6 +1121,23 @@ footer > a:last-child {
   text-decoration: none;
   color: #718264;
 }
+@media (min-width: 1280px) {
+  .market-body {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    align-items: start;
+    gap: 20px;
+  }
+  .market-table th, .market-table td {
+    padding-inline: 9px;
+  }
+  .score-panel {
+    margin-top: 0;
+  }
+  .score-panel svg text {
+    font-size: 16px;
+  }
+}
 @media (min-width: 1400px) {
   .hero {
     padding-top: 85px;
@@ -1238,6 +1255,9 @@ footer > a:last-child {
   }
 }
 @media (max-width: 760px) {
+  .score-panel svg text, .volcano-chart.wide-chart text {
+    font-size: 20px;
+  }
   .site-header {
     padding: 0 24px;
     height: 70px;

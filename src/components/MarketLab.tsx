@@ -48,7 +48,7 @@ export default function MarketLab() {
       </div>
       <div className="score-panel">
         <div className="chart-title"><h4>順位をたどる曲線</h4><span>重みなしの模式例</span></div>
-        <svg viewBox="0 0 570 240" role="img" aria-labelledby="score-title score-desc">
+        <svg viewBox="0 0 570 260" role="img" aria-labelledby="score-title score-desc">
           <title id="score-title">{selected.name}の累積スコア</title><desc id="score-desc">横軸は順位、縦軸は簡略スコア。灰色の線は全体の静止図、緑色の線は現在のステップまで。最大の絶対的な偏りは{peak.toFixed(2)}です。</desc>
           {[-1, 0, 1].map(value => <g key={value}><line x1="48" x2="528" y1={y(value)} y2={y(value)} stroke={value === 0 ? '#8e9b91' : '#e1e6df'} strokeDasharray={value === 0 ? undefined : '4 4'} /><text x="36" y={y(value) + 4} textAnchor="end">{value > 0 ? '+1' : value}</text></g>)}
           <text x="48" y="17">簡略スコア</text>
@@ -57,7 +57,7 @@ export default function MarketLab() {
           {ranked.map((p, i) => selected.ids.includes(p.id) && <rect key={p.id} x={x(i + 1) - 3} y="197" width="6" height="9" fill="#b77342" />)}
           <circle cx={x(step)} cy={y(scores[step])} r="5" fill="#1f6556" stroke="white" strokeWidth="2" />
           {[0, 4, 8, 12].map(value => <text key={value} x={x(value)} y="221" textAnchor="middle">{value}</text>)}
-          <text x="288" y="238" textAnchor="middle">順位（時間ではありません）</text>
+          <text x="288" y="252" textAnchor="middle">順位（時間ではありません）</text>
         </svg>
         <div className="step-status" aria-live="polite" aria-atomic="true"><span>{String(step).padStart(2, '0')} <small>/ 12</small></span><p>{current ? <>{current.name}<strong>{selected.ids.includes(current.id) ? `セット内：+${(1 / selected.ids.length).toFixed(3)}` : `セット外：−${(1 / (12 - selected.ids.length)).toFixed(3)}`}</strong></> : <>0からスタート<strong>セットの商品で上がり、それ以外で下がる</strong></>}</p><b>{scores[step].toFixed(2)}</b></div>
         <fieldset disabled={!ready} className="step-controls"><legend className="sr-only">順位曲線の操作</legend><button disabled={step === 0} onClick={() => { setRunning(false); setStep(step - 1); }}>戻る</button><button className="primary" disabled={step === 12} onClick={() => { setRunning(false); setStep(step + 1); }}>次へ <span aria-hidden="true">→</span></button><button disabled={step === 12 || reducedMotion} onClick={() => setRunning(!running)}>{running ? '停止' : '再生'}</button><button onClick={reset}>リセット</button></fieldset>

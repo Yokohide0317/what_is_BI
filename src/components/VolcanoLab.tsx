@@ -6,10 +6,20 @@ const signed = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}`;
 export default function VolcanoLab() {
   const [selectedId, setSelectedId] = useState('DEMO01');
   const [ready, setReady] = useState(false);
+  const [compact, setCompact] = useState(false);
   const rowRefs = useRef(new Map<string, HTMLTableRowElement>());
-  useEffect(() => setReady(true), []);
+  useEffect(() => {
+    setReady(true);
+    const media = window.matchMedia('(max-width: 760px)');
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const selected = genes.find(g => g.id === selectedId)!;
-  const x = (fc: number) => 66 + (fc + 2.25) / 4.5 * 586;
+  const plotWidth = compact ? 390 : 710;
+  const right = plotWidth - 58;
+  const x = (fc: number) => 66 + (fc + 2.25) / 4.5 * (right - 66);
   const y = (padj: number) => 263 + Math.log10(padj) / 2.2 * 226;
   const choosePoint = (id: string) => {
     setSelectedId(id);
@@ -19,14 +29,14 @@ export default function VolcanoLab() {
     <div className="lab-heading"><div><span className="lab-index">教材 02</span><h3>遺伝子の表とボルケーノプロット</h3></div><span className="data-badge">人工データ · 全48遺伝子</span></div>
     <p className="lab-intro">条件Bと対照Aの比較。DEMO01〜48は架空の遺伝子です。原論文のshCaN実験ではありません。</p>
     <div className="plot-legend"><span><b className="diamond">◆</b> 模式セットA</span><span><b className="circle">○</b> セット外</span><span>色・形はセットへの所属を表します</span></div>
-    <svg className="volcano-chart" viewBox="0 0 710 330" role="group" aria-label="48遺伝子のボルケーノプロット。点はキーボードまたは表からも選択できます。">
-      {[0, 1, 2].map(value => <g key={value}><line x1="66" x2="652" y1={263 - value / 2.2 * 226} y2={263 - value / 2.2 * 226} stroke="#e1e6df" /><text x="53" y={267 - value / 2.2 * 226} textAnchor="end">{value}</text></g>)}
+    <svg className={`volcano-chart ${compact ? 'compact-chart' : 'wide-chart'}`} viewBox={`0 0 ${plotWidth} 330`} role="group" aria-label="48遺伝子のボルケーノプロット。点はキーボードまたは表からも選択できます。">
+      {[0, 1, 2].map(value => <g key={value}><line x1="66" x2={right} y1={263 - value / 2.2 * 226} y2={263 - value / 2.2 * 226} stroke="#e1e6df" /><text x="53" y={267 - value / 2.2 * 226} textAnchor="end">{value}</text></g>)}
       <line x1={x(0)} x2={x(0)} y1="30" y2="263" stroke="#b6c3b9" />
-      <line x1="66" x2="652" y1={y(0.05)} y2={y(0.05)} stroke="#a5ada4" strokeDasharray="4 4" /><text x="650" y={y(0.05) - 8} textAnchor="end">調整済みp = 0.05</text>
+      <line x1="66" x2={right} y1={y(0.05)} y2={y(0.05)} stroke="#a5ada4" strokeDasharray="4 4" /><text x={right - 2} y={y(0.05) - 8} textAnchor="end">調整済みp = 0.05</text>
       <text x="24" y="160" textAnchor="middle" transform="rotate(-90 24 160)">−log₁₀ 調整済みp値</text>
       {[-2, -1, 0, 1, 2].map(value => <text key={value} x={x(value)} y="284" textAnchor="middle">{value > 0 ? `+${value}` : value}</text>)}
-      <text x="359" y="308" textAnchor="middle">log₂ fold change（条件B / 対照A）</text>
-      <text x="66" y="327">← Bで少ない</text><text x="652" y="327" textAnchor="end">Bで多い →</text>
+      <text x={(66 + right) / 2} y="308" textAnchor="middle">log₂ fold change（条件B / 対照A）</text>
+      <text x="66" y="327">← Bで少ない</text><text x={right} y="327" textAnchor="end">Bで多い →</text>
       {genes.map(gene => <g key={gene.id} role="button" tabIndex={ready ? 0 : -1} aria-disabled={!ready} aria-label={`${gene.id}、log2変化量 ${signed(gene.log2fc)}、調整済みp値 ${format(gene.padj)}、${gene.member ? 'セットA' : 'セット外'}`} aria-pressed={selectedId === gene.id} onClick={() => ready && choosePoint(gene.id)} onKeyDown={event => { if (ready && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); choosePoint(gene.id); } }} className={`gene-point ${gene.member ? 'in-set' : ''}`}>
         <circle cx={x(gene.log2fc)} cy={y(gene.padj)} r="11" fill="transparent" />
         {gene.member ? <path d={`M${x(gene.log2fc)},${y(gene.padj) - 5}l5,5 -5,5 -5,-5z`} /> : <circle cx={x(gene.log2fc)} cy={y(gene.padj)} r="4" />}
