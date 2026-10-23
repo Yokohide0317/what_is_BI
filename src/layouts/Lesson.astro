@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+const chapters = [
+  ['market', 'スーパーで考える'], ['sets', '集まりを先に決める'],
+  ['enrichment', '偏りを二通りで見る'], ['genes', '商品から遺伝子へ'],
+  ['volcano', '表とプロットを読む'], ['paper', '原論文を読む'],
+  ['review', '学習のまとめ'],
+];
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="スーパーの商品から考える遺伝子セット。表と図に触れながら、ノックダウン・ボルケーノプロット・GSEAの読み方を学ぶ教材。" />
+    <meta name="theme-color" content="#f7f8f4" />
+    <title>遺伝子セットってなんだろう？ | what is BI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231f6556'/%3E%3Cpath d='M9 22V10m7 12V16m7 6V6' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <header class="site-header">
+      <a href="#" class="brand" aria-label="what is BI ページの先頭">
+        <span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>what is <b>BI</b><span class="brand-dot">.</span>
+      </a>
+      <nav aria-label="サイト内"><a href="#market">教材</a><a href="#glossary">用語</a><a href="#sources">参考文献 <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="lesson-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>01</span> バイオインフォマティクス入門</div>
+          <h1 id="lesson-title">遺伝子セットって<br /><em>なんだろう？</em></h1>
+          <p>スーパーの商品から、細胞のなかへ。<br />一つひとつの変化と、集まりの偏りを考える。</p>
+          <div class="hero-meta"><span>医学部1年生から</span><span>約15〜20分</span><span>操作できる教材</span></div>
+          <a class="start-link" href="#market">読みはじめる <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-art">
+          <svg viewBox="0 0 460 330" role="img" aria-labelledby="hero-art-title">
+            <title id="hero-art-title">ばらばらの項目から、関連する項目の集まりと順位の偏りを見る模式図</title>
+            <defs><pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#dce4da" /></pattern></defs>
+            <rect width="460" height="330" rx="18" fill="url(#grid)" />
+            <path d="M105 150C160 150 148 90 215 92S278 171 344 163" fill="none" stroke="#c1cec4" stroke-width="1.5" stroke-dasharray="5 6" />
+            <g transform="translate(27 84)">
+              <rect width="128" height="174" rx="12" fill="#fffefa" stroke="#d8dfd5" />
+              <text x="18" y="28" fill="#52645a" font-size="12">一つひとつ</text>
+              <circle cx="33" cy="60" r="10" fill="#d88a56" /><circle cx="65" cy="60" r="10" fill="#e3b88e" /><circle cx="97" cy="60" r="10" fill="#dce5d8" />
+              <circle cx="33" cy="94" r="10" fill="#dce5d8" /><circle cx="65" cy="94" r="10" fill="#d88a56" /><circle cx="97" cy="94" r="10" fill="#c6d8c8" />
+              <circle cx="33" cy="128" r="10" fill="#c6d8c8" /><circle cx="65" cy="128" r="10" fill="#dce5d8" /><circle cx="97" cy="128" r="10" fill="#d88a56" />
+            </g>
+            <g transform="translate(178 28)">
+              <rect width="133" height="172" rx="12" fill="#fffefa" stroke="#d8dfd5" />
+              <text x="17" y="28" fill="#52645a" font-size="12">関連する集まり</text>
+              <rect x="16" y="46" width="100" height="26" rx="5" fill="#f7e6d7" /><rect x="16" y="79" width="100" height="26" rx="5" fill="#f7e6d7" /><rect x="16" y="112" width="100" height="26" rx="5" fill="#f7e6d7" />
+              <g fill="#bd6c36"><circle cx="30" cy="59" r="5" /><circle cx="30" cy="92" r="5" /><circle cx="30" cy="125" r="5" /></g>
+              <path d="M45 59h54M45 92h39M45 125h27" stroke="#ce9f78" stroke-width="4" stroke-linecap="round" />
+            </g>
+            <g transform="translate(264 188)">
+              <rect width="171" height="118" rx="12" fill="#1f6556" />
+              <text x="16" y="26" style="fill: #e8f0e6" font-size="12">順位の偏り</text>
+              <path d="M19 83h135M19 41v42" stroke="#82aa98" fill="none" />
+              <path d="M20 82L40 63 60 44 80 52 100 61 120 70 151 82" stroke="#e4d99e" stroke-width="3" fill="none" stroke-linejoin="round" />
+              <circle cx="60" cy="44" r="4" fill="#e4d99e" />
+            </g>
+          </svg>
+        </div>
+      </section>
+      <div class="lesson-strip"><span>この教材で考えること</span><p>「どれが変わった？」から、<strong>「どんな集まりが変わった？」</strong>へ。</p></div>
+      <div class="reading-layout">
+        <aside class="contents">
+          <nav aria-label="記事の目次"><p class="contents-label">この記事の内容</p><ol>{chapters.map(([id, label], i) => <li><a href={`#${id}`}><span>{String(i + 1).padStart(2, '0')}</span>{label}</a></li>)}</ol></nav>
+          <div class="contents-note"><span class="small-dot"></span> 数値の区別<p>操作教材は架空・人工データ。<br />論文の結果とは異なります。</p></div>
+        </aside>
+        <article class="lesson-body"><noscript><div class="callout">JavaScriptが無効のため操作はできません。表・静止図・各図の要約で内容を読めます。</div></noscript><slot /></article>
+      </div>
+    </main>
+    <footer><a class="brand" href="#">what is <b>BI</b><span class="brand-dot">.</span></a><span>バイオインフォマティクス入門</span><a href="#main">ページの先頭へ ↑</a></footer>
+    <script>
+      const links = document.querySelectorAll<HTMLAnchorElement>('.contents a');
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          for (const link of links) {
+            if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+          }
+        }
+      }, { rootMargin: '-12% 0px -65% 0px' });
+      document.querySelectorAll('article > section[id]').forEach(section => observer.observe(section));
+    </script>
+  </body>
+</html>
