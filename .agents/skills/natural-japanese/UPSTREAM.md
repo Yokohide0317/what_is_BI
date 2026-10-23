@@ -1,8 +1,8 @@
-# Upstream provenance
+# 導入元
 
-- Upstream URL: https://github.com/coji/natural-japanese
-- Pinned commit: `45ef3a06e583d3c90a6a938d51d555112301a133`
-- License: MIT
-- Install method: manual vendoring under `.agents/skills/natural-japanese/`
+- リポジトリ: https://github.com/coji/natural-japanese
+- 固定コミット: `45ef3a06e583d3c90a6a938d51d555112301a133`
+- ライセンス: MIT
+- 配置先: `.agents/skills/natural-japanese/`
 
-The skill files in this directory are copied from that exact commit without local edits. The installed `LICENSE` is the upstream repository root license. The inspection scripts require `uv`, as documented upstream.
+スキル一式は、このコミットから変更せずにコピーしています。`LICENSE` は導入元リポジトリ直下のものです。検査スクリプトは、導入元の案内に従い `uv` で実行します。
