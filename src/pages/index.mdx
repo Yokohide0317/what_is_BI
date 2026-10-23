@@ -4,145 +4,176 @@ layout: ../layouts/Lesson.astro
 import MarketLab from '../components/MarketLab';
 import Knockdown from '../components/Knockdown';
 import VolcanoLab from '../components/VolcanoLab';
+import GeneCounts from '../components/GeneCounts.astro';
+import Overrepresentation from '../components/Overrepresentation.astro';
+import GeneRankLab from '../components/GeneRankLab';
 
 <section id="market">
-<div className="section-number">01 <span>身近なところから</span></div>
 
-## 前月より今月、何が売れている？
+## 1. 序論：冬と夏の販売個数
 
-スーパーの販売個数を見てみましょう。カレールーは前月の100個から、今月は150個へ。**50%増えています。** それだけでなく、たまねぎ、じゃがいも、にんじんも増えています。
-
-「カレーに使う商品が、まとめて伸びているのかもしれない」。一つの商品だけでは気づかなかった問いが、関連する商品を並べると見えてきます。
-
-<div className="intro-table">
-
-| 商品 | 前月の個数 | 今月の個数 | 増減 |
-| :-- | --: | --: | --: |
-| カレールー | 100 | 150 | +50% |
-| たまねぎ | 200 | 270 | +35% |
-| じゃがいも | 200 | 260 | +30% |
-| にんじん | 100 | 125 | +25% |
-| 牛乳 | 200 | 210 | +5% |
-| パン | 200 | 190 | −5% |
-
-</div>
-<p className="caption">架空の販売個数。全12商品のうち6商品を抜粋。売上金額ではなく個数を使い、値上げの影響を混ぜないようにしています。</p>
-
-<div className="callout"><strong>ただし、原因までは分かりません。</strong><p>特売、季節、来店客数の変化でも説明できます。「カレー関連の商品が増えた」は観察であって、「カレーの流行が原因だ」という証明ではありません。</p></div>
-</section>
-
-<section id="sets">
-<div className="section-number">02 <span>遺伝子セットへの入口</span></div>
-
-## 「集まり」は、結果を見る前に決める。
-
-ここでは「カレーの材料」「シチューの材料」「朝食の商品」という3つのセットを、先に用意します。たまねぎはカレーにもシチューにも入ります。**セット同士は重なっていてかまいません。**
-
-<div className="set-cards"><div><h3>カレーの材料</h3><p>カレールー · たまねぎ<br />じゃがいも · にんじん</p><span>4商品</span></div><div><h3>シチューの材料</h3><p>シチュールー · たまねぎ<br />じゃがいも · にんじん · 牛乳</p><span>5商品</span></div></div>
-
-売れた商品だけを後から集めて「カレーセット」と名づけると、「増えたものが多い」のは当たり前になってしまいます。実際の**遺伝子セット**も、既知の機能や過去の研究などを根拠に定義された、遺伝子の集まりです。
-
-この教材の料理セットは説明用の小さな定義です。すべての食材やレシピを網羅するものではありません。
-</section>
-
-<section id="enrichment">
-<div className="section-number">03 <span>表と曲線で考える</span></div>
-
-## 集まりの「偏り」を、二通りで見る。
-
-### 上位を選ぶ方法
-
-増加率の上位4商品だけを見ると、カレーの材料は4つとも含まれます。一方、全12商品のなかでは4商品。**全体での割合と、選んだ商品のなかでの割合を比べる**のが、過剰代表解析（ORA）の入口です。
-
-「上位」をどこで区切るかで結果は変わります。ここでは割合だけを比べ、統計的な検定はしていません。比較の土台は、表示している全12商品です。
-
-### 順位全体を見る方法
-
-上位だけを切り取らず、12商品すべてを増減率で並べます。セットの商品に出会ったら上がり、それ以外なら下がる。この曲線で、セットが順位のどちら側に集まっているかを見ます。これが<strong>GSEA（遺伝子セットエンリッチメント解析）</strong>につながる考え方です。
+同じスーパーで、冬と夏に何個売れたかを比べます。下の表は、各30日間の販売個数を並べた架空データです。金額ではなく、商品1個・1袋・1パックを1として数えています。
 
 <MarketLab client:load />
 
-<div className="callout"><strong>横軸は「順位」。時間ではありません。</strong><p>ここでは重みなしの簡略スコアを使います。本来のGSEAでは順位指標による重みづけや、置換による評価などを行います。この曲線から論文のNESやFDRは計算していません。</p></div>
+カレールーは100個から150個へ、50%増えています。たまねぎ、じゃがいも、にんじんも増えています。<strong>一つの商品だけでなく、関連する商品の集まりにも変化が見えます。</strong>
+
+「カレーの材料」などの集まりは、売れた結果を見ずに決めておきます。たまねぎのように、複数の集まりに入る商品もあります。ただし、販売個数だけでは、特売や来店客数などの影響と、料理の流行を区別できません。
+
+このように、項目ごとの個数を並べたものが<strong>カウントデータ</strong>です。遺伝子を調べるときも、行に遺伝子、列に試料を並べて比較します。
+
+<div className="mapping"><div><span>商品</span><b aria-hidden="true">→</b><strong>遺伝子</strong></div><div><span>冬・夏の販売個数</span><b aria-hidden="true">→</b><strong>条件A・BのRNA由来のカウント</strong></div><div><span>関連する商品</span><b aria-hidden="true">→</b><strong>関連する遺伝子</strong></div></div>
+
+販売個数とRNAのカウントは別の量ですが、「同じ項目を、異なる条件で比べる」という表の読み方は共通です。
 </section>
 
 <section id="genes">
-<div className="section-number">04 <span>生活の例から、細胞の実験へ</span></div>
 
-## 商品を、遺伝子に置き換える。
+## 2. 遺伝子とRNA
 
-スーパーで見ていた関係を、細胞のなかに置き換えてみましょう。
+遺伝子は、RNAを作る情報を持つDNAの領域です。タンパク質を作る遺伝子では、DNAの情報がmRNAに写され、そのmRNAをもとにタンパク質が作られます。
 
-<div className="mapping"><div><span>商品</span><b aria-hidden="true">→</b><strong>遺伝子</strong></div><div><span>販売個数の比較</span><b aria-hidden="true">→</b><strong>RNA量の比較</strong></div><div><span>料理の材料セット</span><b aria-hidden="true">→</b><strong>機能が関連する遺伝子セット</strong></div></div>
+<p className="molecular-path">DNA → mRNA → タンパク質</p>
 
-**RNA-seq**は、細胞などから得たRNAを配列として読み、どの遺伝子のRNAがどれくらいあるかを調べる方法です。試料間の比較では、読み取った総量などの違いを考慮した補正（正規化）が必要です。
+DNAからRNAを作る過程を<strong>転写</strong>、mRNAからタンパク質を作る過程を<strong>翻訳</strong>と呼びます。
 
-ただし、RNA量はタンパク質の量や働きそのものではありません。RNAからタンパク質が作られる過程や、その後の分解などによっても変わります。
+RNA量を測ると、どの遺伝子がどれくらい発現しているかを調べられます。ただし、翻訳や分解の影響もあるため、<strong>RNA量とタンパク質の量・働きは同じではありません。</strong>
+</section>
 
-### shRNAで「減らす」とは？
+<section id="knockdown">
 
-DNAの情報からmRNAが作られ、mRNAをもとにタンパク質が作られます。shRNAは細胞内で処理され、標的のmRNAを減らす仕組みに利用されます。
+## 3. shRNA
+
+<strong>shRNA</strong>は、標的のmRNAを減らす仕組みに利用する短いRNAです。遺伝子産物の量を下げる操作を<strong>ノックダウン</strong>と呼びます。DNAそのものを消す操作ではありません。
 
 <Knockdown client:load />
+</section>
 
-**ノックダウン**は、遺伝子産物の量を下げる操作です。DNAそのものを消す操作とは区別します。後で読む論文のshCaNは、カルシニューリンのCaN Aαを減らすためのshRNAであり、**E2F1を直接狙うshRNAではありません。**
+<section id="rnaseq">
+
+## 4. RNA-seqとカウント表
+
+<strong>RNA-seq</strong>は、試料中のRNAに由来する配列を読み取り、遺伝子の発現量などを調べる方法です。遺伝子ごとに対応するリード（読み取った配列）などを数え、カウント表にまとめます。
+
+表の<strong>1行は1遺伝子、1列は1試料</strong>です。条件AとBを比べるときも、各条件で複数の試料を測り、試料間のばらつきを調べます。
+
+<GeneCounts />
+
+この表は、後の図でも使う人工発現量です。A1〜A6とB1〜B6が各条件の6反復で、DEMO01〜48は架空の遺伝子名です。実際のRNA-seqのリード数ではありません。
+
+実際のカウントは、RNA量だけでなく試料ごとに読み取った総量などにも左右されます。条件間で比べる前に、その違いを考慮する<strong>正規化</strong>が必要です。
+</section>
+
+<section id="fold-change">
+
+## 5. 発現量の変化
+
+<strong>fold change</strong>は発現量の比です。ここでは条件Bの平均を対照Aの平均で割ります。その比を2を底とする対数で表したものが、<strong>log₂ fold change</strong>です。
+
+| 条件B / 対照A | log₂ fold change | 意味 |
+| --: | --: | :-- |
+| 2 | +1 | Bで2倍 |
+| 1 | 0 | 同じ |
+| 0.5 | −1 | Bで半分 |
+
+正ならBで多く、負ならBで少なくなります。比較の向きを逆にすると、符号も逆になります。
+</section>
+
+<section id="p-values">
+
+## 6. p値と多重検定
+
+平均が違っていても、試料のばらつきで説明できるかもしれません。<strong>p値</strong>は、差がないという仮定と検定の前提のもとで、観測された差以上に極端な結果が出る確率です。「差がない確率」そのものではありません。
+
+多数の遺伝子を同時に調べると、偶然小さなp値になるものも増えます。この教材ではBenjamini–Hochberg（BH）法でp値を調整し、<strong>調整済みp値</strong>を使います。
+
+変化の大きさとp値は別の指標です。p値が小さいことだけで、生物学的に重要とは判断できません。
 </section>
 
 <section id="volcano">
-<div className="section-number">05 <span>一つひとつの遺伝子を見る</span></div>
 
-## 表の1行が、プロットの1点になる。
+## 7. ボルケーノプロット
 
-ボルケーノプロットは、たくさんの遺伝子の変化を一枚に並べた図です。**1点は1遺伝子。** 横軸で変化の方向と大きさ、縦軸で統計的な指標を読みます。
+表の1行を、図の1点にします。<strong>1点は1遺伝子</strong>です。
 
-<div className="axis-cards"><div><span>横軸</span><h3>log₂ fold change</h3><p>ここでは条件B ÷ 対照A。+1なら2倍、−1なら半分です。</p></div><div><span>縦軸</span><h3>−log₁₀ 調整済みp値</h3><p>上に行くほど調整済みp値が小さくなります。</p></div></div>
+<div className="axis-cards"><div><span>横軸</span><h3>log₂ fold change</h3><p>変化の方向と大きさ。左はBで少なく、右はBで多い。</p></div><div><span>縦軸</span><h3>−log₁₀ 調整済みp値</h3><p>上に行くほど調整済みp値が小さい。</p></div></div>
 
 <VolcanoLab client:load />
+</section>
 
-**上にあるほど、生物学的に重要という意味ではありません。** p値は、差がないという仮定と検定の前提のもとで、観測された差以上に極端な結果が出る確率です。「差がない確率」そのものではありません。多くの遺伝子を同時に調べるため、ここではBenjamini–Hochberg（BH）法でp値を調整しています。
+<section id="sets">
 
-スーパーの「前月・今月の合計値が1つずつ」というデータだけから、妥当なp値を作ることはできません。そのため、この図には別に生成した反復のある人工データを使っています。
+## 8. 遺伝子セット
+
+<strong>遺伝子セット</strong>は、既知の機能や過去の研究などに基づいて定義した遺伝子の集まりです。細胞周期や免疫応答に関わる遺伝子などが例です。一つの遺伝子が複数のセットに入ることもあります。
+
+セットは<strong>比較の結果を見る前に</strong>決めます。変化の大きかった遺伝子だけを後から集めれば、「変化が大きい」のは当然になってしまいます。
+
+この教材の「セットA」は、全48遺伝子のうち16遺伝子を、発現量とは独立に番号で決めた模式セットです。図の◆がセットA、○がセット外を表します。実在の機能を持つ集まりではありません。
+</section>
+
+<section id="ora">
+
+## 9. 過剰代表解析
+
+<strong>過剰代表解析（ORA）</strong>は、選んだ遺伝子群に、あるセットの遺伝子が多く含まれるかを調べます。比較の基準となる遺伝子全体を<strong>背景集合</strong>と呼びます。
+
+例として、Bで減少の大きい12遺伝子を選び、セットAの割合を全48遺伝子での割合と比べます。
+
+<Overrepresentation />
+
+選んだ12遺伝子では、セットAの割合が高くなっています。ただし、ここでは割合だけの比較です。本来のORAでは、偶然でもこの偏りが起こりうるかを統計的に評価します。選ぶ基準や背景集合によって結果は変わります。
+</section>
+
+<section id="gsea">
+
+## 10. GSEA
+
+<strong>GSEA（遺伝子セットエンリッチメント解析）</strong>は、一部の遺伝子だけを選ぶのではなく、順位づけた遺伝子全体を使います。セットの遺伝子が、順位のどちら側に集まっているかを調べます。
+
+ここでは全48遺伝子をlog₂ fold change順に並べます。セットAの遺伝子で上がり、セット外で下がる曲線を描くと、順位の偏りが見えます。
+
+<GeneRankLab client:load />
+
+これは重みなしの簡略例です。本来のGSEAでは、順位指標による重みづけや置換による評価などを行います。この曲線から論文のNESやFDRは計算していません。
 </section>
 
 <section id="paper">
-<div className="section-number">06 <span>原論文へ戻る</span></div>
 
-## 図5を、条件 → 凡例 → 分布 → 結論の順に。
+## 11. 原論文の図5
 
-Satoらの論文（PNAS, 2024）では、ヒト乳がん由来のMCF7細胞を使って、カルシニューリンとE2F1の関係を調べています。E2F1は、遺伝子の発現を調節する**転写因子**の一つです。
+Satoら（PNAS, 2024）は、ヒト乳がん由来のMCF7細胞を使って、カルシニューリンとE2F1の関係を調べています。E2F1は、遺伝子の発現を調節する<strong>転写因子</strong>の一つです。
 
-<a className="paper-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11474076/#fig05"><span><small>原論文 · Figure 5</small><strong>CaN Aαを減らすと、何が変わる？</strong></span><span aria-hidden="true">↗</span></a>
+この論文のshCaNは、カルシニューリンのCaN Aαを減らすためのshRNAです。<strong>E2F1を直接狙うshRNAではありません。</strong>
 
-<ol className="reading-steps"><li><strong>条件を確かめる</strong><p>CaN AαをノックダウンしたMCF7細胞と、対照の細胞を比較しています。操作した対象と、測定した対象を分けて読みます。</p></li><li><strong>凡例を読む</strong><p>図5Bの赤い点は、Hallmark E2F標的遺伝子です。「赤＝有意差あり」ではありません。色の意味は図ごとに確認します。</p></li><li><strong>分布を見る</strong><p>図5Bで個々の遺伝子の変化を確認し、図5C–Eで遺伝子セット全体の偏りを見ます。比較の向きと順位指標を確かめてから、曲線の向きを読みます。</p></li><li><strong>言える範囲を区切る</strong><p>著者らは、CaN Aαを減らすとE2F標的遺伝子群の発現が低下することを示しています。ただし、発現の変化だけでは、直接結合やタンパク質分解の仕組みまで証明できません。</p></li></ol>
+<a className="paper-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11474076/#fig05"><strong>原論文 · Figure 5</strong><span aria-hidden="true">↗</span></a>
 
-図5C–Eの**NES**は正規化されたエンリッチメントスコア、**FDR**は偽発見率に関する指標です。これらは解析対象全体や解析条件に基づきます。一部の遺伝子を抜き出した小さな表から、論文の値を再現することはできません。
+<ol className="reading-steps"><li><strong>条件</strong><p>CaN AαをノックダウンしたMCF7細胞と、対照の細胞を比較しています。</p></li><li><strong>凡例</strong><p>図5Bの赤い点はHallmark E2F標的遺伝子です。「赤＝有意差あり」ではありません。</p></li><li><strong>分布</strong><p>図5Bで個々の遺伝子の変化、図5C–Eで遺伝子セット全体の偏りを見ます。曲線を読む前に、比較の向きと順位指標を確かめます。</p></li><li><strong>結論</strong><p>著者らは、CaN Aαを減らすとE2F標的遺伝子群の発現が低下することを示しています。ただし、発現の変化だけでは、直接結合やタンパク質分解の仕組みまで証明できません。</p></li></ol>
 
-<p className="caption">ここでは論文図を転載せず、原文へリンクしています。操作教材は論文の再解析ではありません。図5の説明は本文・図注に基づきます。</p>
+図5C–Eの<strong>NES</strong>は正規化されたエンリッチメントスコア、<strong>FDR</strong>は偽発見率に関する指標です。一部の遺伝子を抜き出した表から、論文の値を再現することはできません。
 </section>
 
 <section id="review">
-<div className="section-number">07 <span>自分の言葉で確かめる</span></div>
 
-## 一つの変化と、集まりの変化。
+## 12. 確認問題
 
-**「どの遺伝子が変わったか」と「どんな遺伝子群が偏っているか」は、別の問いです。** 両方の見方を行き来すると、図から言えることと、まだ言えないことを分けて考えられます。
-
-<div className="questions"><details><summary>カレーの材料が上位に多い。流行が原因と言える？</summary><p>言い切れません。偏りは観察できても、特売や季節など別の説明が残ります。原因を区別するには別の情報が必要です。</p></details><details><summary>過剰代表解析とGSEAは、どこが違う？</summary><p>過剰代表解析は、選んだ遺伝子群にセットの遺伝子が多いかを背景全体と比べます。GSEAは、順位をつけた遺伝子全体のなかでセットが偏っているかを見ます。</p></details><details><summary>shCaNは、E2F1のDNAを消す操作？</summary><p>違います。CaN Aαを標的としてmRNAを減らす仕組みを利用する操作です。E2F1を直接標的にするものでも、DNAを消すものでもありません。</p></details><details><summary>ボルケーノの赤い点は、必ず有意差がある？</summary><p>色の意味は凡例によります。原論文の図5BではHallmark E2F標的遺伝子を示しています。点の高さと色の意味は別です。</p></details></div>
+<div className="questions"><details><summary>カウント表の1行と1列は何を表す？</summary><p>1行は1遺伝子、1列は1試料です。複数の試料から、条件の違いと試料間のばらつきを調べます。</p></details><details><summary>ORAとGSEAは、どこが違う？</summary><p>ORAは、選んだ遺伝子群にセットの遺伝子が多いかを背景全体と比べます。GSEAは、順位をつけた遺伝子全体のなかでセットが偏っているかを見ます。</p></details><details><summary>shCaNは、E2F1のDNAを消す操作？</summary><p>違います。CaN Aαを標的としてmRNAを減らす仕組みを利用する操作です。E2F1を直接狙うものでも、DNAを消すものでもありません。</p></details><details><summary>ボルケーノの赤い点は、必ず有意差がある？</summary><p>色の意味は凡例によります。原論文の図5BではHallmark E2F標的遺伝子を示します。点の高さと色の意味は別です。</p></details></div>
 </section>
 
 <section id="glossary" className="reference-section">
 
 ## 用語
 
-<dl className="glossary"><div><dt>遺伝子セット</dt><dd>既知の機能や過去の研究などに基づいて定義した遺伝子の集まり。セット同士は重なってよい。</dd></div><div><dt>ノックダウン</dt><dd>特定の遺伝子産物の量を減らす操作。遺伝子のDNAをなくすこととは異なる。</dd></div><div><dt>RNA-seq</dt><dd>RNAを配列として読み取り、遺伝子の発現量などを調べる方法。</dd></div><div><dt>エンリッチメント</dt><dd>比較の基準に対して、ある集まりが相対的に多く含まれることや、順位の片側に偏ること。</dd></div><div><dt>調整済みp値</dt><dd>多数の検定を行うことを考慮して調整したp値。効果の大きさや生物学的な重要度とは別の指標。</dd></div><div><dt>NES / FDR</dt><dd>NESは正規化されたエンリッチメントスコア。FDRは、発見とした結果の中に誤った発見が含まれる割合に関する指標。</dd></div></dl>
+<dl className="glossary"><div><dt>カウントデータ</dt><dd>項目ごとに数えた個数のデータ。</dd></div><div><dt>遺伝子セット</dt><dd>既知の機能や過去の研究などに基づいて定義した遺伝子の集まり。</dd></div><div><dt>ノックダウン</dt><dd>特定の遺伝子産物の量を減らす操作。DNAをなくすこととは異なる。</dd></div><div><dt>RNA-seq</dt><dd>RNA由来の配列を読み取り、遺伝子の発現量などを調べる方法。</dd></div><div><dt>エンリッチメント</dt><dd>比較の基準に対して、ある集まりが相対的に多く含まれることや、順位の片側に偏ること。</dd></div><div><dt>FDR</dt><dd>発見とした結果の中に、誤った発見が含まれる割合に関する指標。</dd></div></dl>
 </section>
 
 <section id="sources" className="reference-section">
 
-## 出典とデータについて
+## 出典とデータ
 
 1. Sato Y, et al. *Calcineurin-mediated dephosphorylation stabilizes E2F1 protein by suppressing binding of the FBXW7 ubiquitin ligase subunit.* PNAS 121, e2414618121 (2024). [原論文（DOI）](https://doi.org/10.1073/pnas.2414618121) · [全文・図5](https://pmc.ncbi.nlm.nih.gov/articles/PMC11474076/#fig05)
-2. [GSEA User Guide](https://docs.gsea-msigdb.org/GSEA/GSEA_User_Guide/) — 解析方法と結果の読み方。
-3. [DRA011729](https://ddbj.nig.ac.jp/resource/sra-submission/DRA011729) — 原論文で参照されるRNA-seqデータ。本教材には取り込んでいません。
+2. [GSEA User Guide](https://docs.gsea-msigdb.org/GSEA/GSEA_User_Guide/)
+3. [DRA011729](https://ddbj.nig.ac.jp/resource/sra-submission/DRA011729) — 原論文で参照されるRNA-seqデータ。
 
-スーパーの12商品とセット定義は架空です。ボルケーノの48遺伝子は生成条件を明示した人工データで、実在の遺伝子名を使っていません。掲載した模式図は本教材用に作成しています。論文の図・実測データ・MSigDBの遺伝子セットの再配布は行っていません。
+商品48件は架空、遺伝子48件は人工データです。論文の実測データやMSigDBのセットは使用していません。論文図はリンク先で参照できます。
 </section>

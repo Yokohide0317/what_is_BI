@@ -1,36 +1,31 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { change, products, rankProducts, runningScores, sets } from '../src/data/market.ts';
+import { change, products, rankProducts, sets } from '../src/data/market.ts';
 
-test('計画書の販売個数と増減率を保持し、元データを変更せず並べ替える', () => {
-  assert.equal(products.length, 12);
-  assert.deepEqual(products.slice(0, 4).map(change), [50, 35, 30, 25]);
+test('冬と夏の48商品の販売個数を保持する', () => {
+  assert.equal(products.length, 48);
+  assert.equal(new Set(products.map(p => p.id)).size, 48);
+  for (const product of products) {
+    assert.ok(Number.isInteger(product.winter) && product.winter > 0);
+    assert.ok(Number.isInteger(product.summer) && product.summer >= 0);
+  }
+  assert.deepEqual(sets.curry.ids.map(id => change(products.find(p => p.id === id)!)), [50, 35, 30, 25]);
   assert.equal(change(products.find(p => p.id === 'milk')!), 5);
   assert.equal(change(products.find(p => p.id === 'bread')!), -5);
+});
+
+test('元データを変更せず並べ替え、一覧順に戻せる', () => {
   const snapshot = structuredClone(products);
-  assert.equal(rankProducts('asc')[0].id, 'cereal');
-  assert.equal(rankProducts('desc')[0].id, 'curry');
+  assert.equal(rankProducts('asc')[0].id, 'mandarin');
+  assert.equal(rankProducts('desc')[0].id, 'watermelon');
+  assert.deepEqual(rankProducts('catalog'), snapshot);
   assert.deepEqual(products, snapshot);
 });
 
-test('ORAは全12商品を土台とし、カレーは上位4商品のすべてを占める', () => {
-  assert.equal(sets.curry.ids.length, 4);
-  assert.equal(rankProducts('desc').slice(0, 4).filter(p => sets.curry.ids.includes(p.id)).length, 4);
-  assert.ok(sets.curry.ids.includes('onion') && sets.stew.ids.includes('onion'));
-});
-
-test('重みなし曲線は0から始まり0に戻り、降順カレーの最大値は1', () => {
+test('すべての集まりに商品が存在し、集まり同士は重なってよい', () => {
   for (const set of Object.values(sets)) {
-    for (const order of ['desc', 'asc'] as const) {
-      const scores = runningScores(rankProducts(order), set.ids);
-      assert.equal(scores.length, 13);
-      assert.equal(scores[0], 0);
-      assert.equal(scores[12], 0);
-      assert.ok(scores.every(s => Math.abs(s) <= 1.00000001));
-    }
+    assert.equal(new Set(set.ids).size, set.ids.length);
+    assert.ok(set.ids.every(id => products.some(p => p.id === id)));
   }
-  assert.equal(Math.max(...runningScores(rankProducts('desc'), sets.curry.ids)), 1);
-  assert.equal(Math.min(...runningScores(rankProducts('asc'), sets.curry.ids)), -1);
-  assert.throws(() => runningScores(products, []));
-  assert.throws(() => runningScores(products, products.map(p => p.id)));
+  assert.ok(sets.curry.ids.includes('onion') && sets.stew.ids.includes('onion'));
 });
