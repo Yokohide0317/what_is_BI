@@ -338,33 +338,19 @@ details[open] > summary::before {
   color: var(--ink);
   margin: 0;
 }
-.lesson-title.intro-hero {
-  position: relative;
-  height: clamp(320px, 36vw, 420px);
-  margin-top: 40px;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--paper);
+.intro-hero picture {
+  display: block;
+  margin-top: 28px;
 }
-.intro-hero picture,
 .intro-hero img {
   display: block;
   width: 100%;
-  height: 100%;
-}
-.intro-hero img {
+  height: clamp(320px, 36vw, 420px);
   object-fit: cover;
   object-position: center 56%;
-}
-.intro-hero h1 {
-  position: absolute;
-  top: 36px;
-  left: 44px;
-  z-index: 1;
-  max-width: calc(100% - 88px);
-  text-shadow: 0 1px 10px var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
 }
 .reading-layout {
   padding: 40px 0 96px;
@@ -1473,15 +1459,11 @@ caption {
   .with-contents .lesson-title {
     padding: 32px 0 0;
   }
-  .lesson-title.intro-hero {
-    height: clamp(240px, 58vw, 330px);
-    margin-top: 24px;
-    padding: 0;
+  .intro-hero picture {
+    margin-top: 20px;
   }
-  .intro-hero h1 {
-    top: 20px;
-    left: 22px;
-    max-width: calc(100% - 44px);
+  .intro-hero img {
+    height: clamp(240px, 58vw, 330px);
   }
   .lesson-title h1 {
     font-size: 26px;

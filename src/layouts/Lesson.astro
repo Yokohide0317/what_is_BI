@@ -41,6 +41,7 @@ const showContents = isRnaSeq && pageChapters.length > 1;
       <div class:list={['page-frame', { 'with-contents': showContents, 'simulation-layout': isSimulation, 'home-layout': isHome }]}>
         {!isReferences && (isIntroduction
           ? <header class="lesson-title intro-hero">
+              <h1>{title}</h1>
               <Picture
                 src={summerFeast}
                 formats={['webp']}
@@ -51,7 +52,6 @@ const showContents = isRnaSeq && pageChapters.length > 1;
                 loading="eager"
                 decoding="async"
               />
-              <h1>{title}</h1>
             </header>
           : <header class="lesson-title"><h1>{title}</h1></header>)}
         <div class="reading-layout">
