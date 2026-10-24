@@ -299,13 +299,21 @@ details[open] > summary::before {
 .site-footer .brand {
   font-size: 18px;
 }
-.site-footer > a:last-child {
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.site-footer nav a {
   color: var(--muted);
   text-decoration: none;
 }
-.site-footer > a:last-child:hover {
+.site-footer nav a:hover {
   color: var(--green);
   text-decoration: underline;
+}
+.site-footer nav a[aria-current="page"] {
+  color: var(--green);
 }
 
 /* Page frame */
@@ -1736,7 +1744,7 @@ caption {
   .step-controls,
   .lab-controls,
   .lesson-pagination,
-  .site-footer > a:last-child {
+  .site-footer nav {
     display: none;
   }
   body {

@@ -15,7 +15,8 @@ const isIntroduction = Astro.url.pathname === '/rna-seq/introduction/';
 const isRnaSeq = Astro.url.pathname === '/rna-seq/';
 const isSimulation = Astro.url.pathname === '/simulation/';
 const isReferences = Astro.url.pathname === '/references/';
-const title = isHome ? '解析を選ぶ' : isSimulation ? 'RNA-seq解析体験' : isReferences ? '用語と参考文献' : isIntroduction ? '序論：夏の食卓' : 'RNA-seqとは';
+const isPolicy = Astro.url.pathname === '/policy/';
+const title = isHome ? '解析を選ぶ' : isSimulation ? 'RNA-seq解析体験' : isReferences ? '用語と参考文献' : isPolicy ? 'サイトポリシー' : isIntroduction ? '序論：夏の食卓' : 'RNA-seqとは';
 const pageChapters = isIntroduction ? chapters.slice(0, 1) : isRnaSeq ? chapters.slice(1) : [];
 const chapterOffset = isIntroduction ? 0 : 1;
 // A contents list with a single entry does not help navigation.
@@ -26,7 +27,7 @@ const showContents = isRnaSeq && pageChapters.length > 1;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={isHome ? 'データ解析のテーマを選べるページ。' : '遺伝子、RNA-seq、ボルケーノプロット、遺伝子セット、GSEAを学ぶ教材。'} />
+    <meta name="description" content={isHome ? 'データ解析のテーマを選べるページ。' : isPolicy ? 'このサイトの制作目的、教材データ、ダウンロード資料について。' : '遺伝子、RNA-seq、ボルケーノプロット、遺伝子セット、GSEAを学ぶ教材。'} />
     <meta name="theme-color" content="#f6f5ef" />
     <title>{title} | what is BI</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231f6556'/%3E%3Cpath d='M9 22V10m7 12V16m7 6V6' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E" />
@@ -70,7 +71,7 @@ const showContents = isRnaSeq && pageChapters.length > 1;
         </div>
       </div>
     </main>
-    <footer class="site-footer"><a class="brand" href="/">what is <b>BI</b><span class="brand-dot">.</span></a><a href="#main">ページの先頭へ ↑</a></footer>
+    <footer class="site-footer"><a class="brand" href="/">what is <b>BI</b><span class="brand-dot">.</span></a><nav aria-label="フッター"><a href="/policy/" aria-current={isPolicy ? 'page' : undefined}>サイトポリシー</a><a href="#main">ページの先頭へ ↑</a></nav></footer>
     <script>
       const links = document.querySelectorAll<HTMLAnchorElement>('.contents a');
       const observer = new IntersectionObserver(entries => {

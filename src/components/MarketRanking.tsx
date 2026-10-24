@@ -39,7 +39,7 @@ export default function MarketRanking() {
               ><title>{`${index + 1}位：${product.name} ${percent(change(product))}${selected ? `・${recipe.name}の材料` : ''}`}</title></rect>;
             })}
           </svg>
-          <div className="rank-direction"><span>増減率が大きい</span><span aria-hidden="true">→</span><span>増減率が小さい</span></div>
+          <div className="rank-direction"><span>夏に増える</span><span aria-hidden="true">→</span><span>夏に減る</span></div>
         </figure>
         <div className="market-body"><MarketSalesTable view={{ kind: 'ranked', recipe }} /></div>
       </div>
