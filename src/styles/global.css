@@ -471,12 +471,21 @@ details[open] > summary::before {
   margin-bottom: 20px;
 }
 .topic-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 16px;
   background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+}
+.topic-card:hover {
+  border-color: var(--green);
+  color: var(--ink);
+  background: var(--surface);
 }
 .topic-card-copy {
   padding: clamp(28px, 4vw, 48px);
@@ -491,33 +500,11 @@ details[open] > summary::before {
   margin: 0;
   line-height: 1.9;
 }
-.topic-links {
-  display: grid;
-  align-content: center;
-  border-left: 1px solid var(--line);
-  background: var(--surface);
-}
-.topic-links a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 64px;
-  padding: 16px 24px;
-  color: var(--ink);
-  font-size: var(--fs-md);
-  font-weight: 700;
-  text-decoration: none;
-}
-.topic-links a + a {
-  border-top: 1px solid var(--line);
-}
-.topic-links a:hover {
-  background: var(--surface-strong);
+.topic-card-arrow {
+  flex: none;
+  padding-right: clamp(28px, 4vw, 48px);
   color: var(--green);
-}
-.topic-links .topic-start {
-  color: var(--green);
+  font-size: 30px;
 }
 .lesson-body p {
   overflow-wrap: anywhere;
@@ -1506,18 +1493,13 @@ caption {
     padding-top: 24px;
   }
   .topic-card {
-    grid-template-columns: 1fr;
+    gap: 8px;
   }
   .topic-card-copy {
     padding: 28px 24px;
   }
-  .topic-links {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-  .topic-links a {
-    min-height: 56px;
-    padding: 12px 24px;
+  .topic-card-arrow {
+    padding-right: 24px;
   }
   .with-contents .reading-layout {
     display: block;

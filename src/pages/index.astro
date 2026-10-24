@@ -3,16 +3,12 @@ import Lesson from '../layouts/Lesson.astro';
 ---
 <Lesson>
   <section class="topic-index" aria-label="解析テーマ">
-    <article class="topic-card">
+    <a class="topic-card" href="/rna-seq/introduction/">
       <div class="topic-card-copy">
         <h2>RNA-seq</h2>
         <p>遺伝子のRNA量を比べ、発現量の変化や遺伝子セットを調べます。</p>
       </div>
-      <nav class="topic-links" aria-label="RNA-seqのページ">
-        <a class="topic-start" href="/rna-seq/introduction/">序論から読む <span aria-hidden="true">→</span></a>
-        <a href="/rna-seq/">RNA-seqの解説 <span aria-hidden="true">→</span></a>
-        <a href="/simulation/">解析体験 <span aria-hidden="true">→</span></a>
-      </nav>
-    </article>
+      <span class="topic-card-arrow" aria-hidden="true">→</span>
+    </a>
   </section>
 </Lesson>

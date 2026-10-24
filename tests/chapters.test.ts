@@ -28,12 +28,11 @@ test('序論とRNA-seqを別ページに分け、8章の目次と本文を一致
   assert.doesNotMatch(rnaPage, /<section id="(?:sets|ora|paper)"/);
 });
 
-test('トップからRNA-seqの序論・解説・解析体験に進める', () => {
+test('トップはRNA-seqの序論を入口にし、ヘッダーに教材メニューを出さない', () => {
   assert.match(homePage, /href="\/rna-seq\/introduction\/"/);
-  assert.match(homePage, /href="\/rna-seq\/"/);
-  assert.match(homePage, /href="\/simulation\/"/);
+  assert.doesNotMatch(homePage, /href="\/(?:rna-seq\/|simulation\/)"/);
   assert.match(layout, /isHome \? '解析を選ぶ'/);
-  assert.match(layout, /href="\/" aria-current=\{isHome/);
+  assert.match(layout, /\{!isHome && <nav aria-label="サイト内">/);
 });
 
 test('用語と参考文献を別ページにする', () => {

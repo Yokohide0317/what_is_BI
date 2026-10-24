@@ -26,7 +26,7 @@ const showContents = isRnaSeq && pageChapters.length > 1;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={isHome ? '解析テーマごとの解説と解析体験を選べるページ。' : '遺伝子、RNA-seq、ボルケーノプロット、遺伝子セット、GSEAを学ぶ教材。'} />
+    <meta name="description" content={isHome ? 'データ解析のテーマを選べるページ。' : '遺伝子、RNA-seq、ボルケーノプロット、遺伝子セット、GSEAを学ぶ教材。'} />
     <meta name="theme-color" content="#f6f5ef" />
     <title>{title} | what is BI</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231f6556'/%3E%3Cpath d='M9 22V10m7 12V16m7 6V6' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E" />
@@ -35,7 +35,7 @@ const showContents = isRnaSeq && pageChapters.length > 1;
     <a class="skip-link" href="#main">本文へスキップ</a>
     <header class="site-header">
       <a href="/" class="brand" aria-label="what is BI トップ"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>what is <b>BI</b><span class="brand-dot">.</span></a>
-      <nav aria-label="サイト内"><a href="/" aria-current={isHome ? 'page' : undefined}>トップ</a><a href="/rna-seq/introduction/" aria-current={isIntroduction ? 'page' : undefined}>序論</a><a href="/rna-seq/" aria-current={isRnaSeq ? 'page' : undefined}>RNA-seq</a><a href="/simulation/" aria-current={isSimulation ? 'page' : undefined}>解析体験</a><a href="/references/#glossary">用語</a><a href="/references/#sources">参考文献</a></nav>
+      {!isHome && <nav aria-label="サイト内"><a href="/">トップ</a><a href="/rna-seq/introduction/" aria-current={isIntroduction ? 'page' : undefined}>序論</a><a href="/rna-seq/" aria-current={isRnaSeq ? 'page' : undefined}>RNA-seq</a><a href="/simulation/" aria-current={isSimulation ? 'page' : undefined}>解析体験</a><a href="/references/#glossary">用語</a><a href="/references/#sources">参考文献</a></nav>}
     </header>
     <main id="main">
       <div class:list={['page-frame', { 'with-contents': showContents, 'simulation-layout': isSimulation, 'home-layout': isHome }]}>
