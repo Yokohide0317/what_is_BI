@@ -9,7 +9,7 @@ test('人工データの全48遺伝子に各6反復があり、変化量とBH調
   assert.equal(genes.length, 48);
   assert.equal(new Set(genes.map(g => g.id)).size, 48);
   for (const g of genes) {
-    assert.match(g.id, /^DEMO\d{2}$/);
+    assert.match(g.id, /^Gene\d{2}$/);
     assert.equal(g.control.length, 6);
     assert.equal(g.treated.length, 6);
     assert.ok([...g.control, ...g.treated].every(v => v >= 1));
@@ -25,8 +25,7 @@ test('人工データの全48遺伝子に各6反復があり、変化量とBH調
   }
 });
 
-test('DEMO01の両側置換p値は全924通り中2通り、所属は事前定義通り', () => {
+test('Gene01の両側置換p値は全924通り中2通り', () => {
   assert.equal(genes[0].p, 2 / 924);
   assert.ok(Math.abs(2 ** genes[0].log2fc - 145 / 489) < 1e-12);
-  genes.forEach((gene, i) => assert.equal(gene.member, i % 6 === 0 || i % 6 === 1));
 });

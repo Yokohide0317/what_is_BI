@@ -7,6 +7,12 @@ import random
 
 rng = random.Random(20261023)
 allocations = list(itertools.combinations(range(12), 6))
+# 模式セットA。順位表の左側に10遺伝子、右側に6遺伝子が現れる例。
+set_a = {
+    'Gene24', 'Gene11', 'Gene12', 'Gene10', 'Gene22',
+    'Gene23', 'Gene04', 'Gene09', 'Gene08', 'Gene34',
+    'Gene05', 'Gene15', 'Gene47', 'Gene02', 'Gene13', 'Gene01',
+}
 genes = []
 for i in range(48):
     baseline = 80 + (i % 7) * 20
@@ -18,13 +24,13 @@ for i in range(48):
     observed = abs(sum(treated) - sum(control))
     extreme = sum(abs(2 * sum(values[j] for j in indices) - sum(values)) >= observed for indices in allocations)
     genes.append({
-        'id': f'DEMO{i + 1:02}',
+        'id': f'Gene{i + 1:02}',
         'control': control,
         'treated': treated,
         'log2fc': math.log2(sum(treated) / sum(control)),
         'p': extreme / len(allocations),
         'padj': 1,
-        'member': i % 6 == 0 or i % 6 == 1,
+        'member': f'Gene{i + 1:02}' in set_a,
     })
 ordered = sorted(genes, key=lambda gene: gene['p'])
 previous = 1

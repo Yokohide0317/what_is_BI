@@ -1,6 +1,6 @@
 [
   {
-    "id": "DEMO01",
+    "id": "Gene01",
     "control": [
       80,
       97,
@@ -23,7 +23,7 @@
     "member": true
   },
   {
-    "id": "DEMO02",
+    "id": "Gene02",
     "control": [
       105,
       95,
@@ -46,7 +46,7 @@
     "member": true
   },
   {
-    "id": "DEMO03",
+    "id": "Gene03",
     "control": [
       135,
       36,
@@ -69,7 +69,7 @@
     "member": false
   },
   {
-    "id": "DEMO04",
+    "id": "Gene04",
     "control": [
       1,
       137,
@@ -89,10 +89,10 @@
     "log2fc": 0.8749182058702387,
     "p": 0.16017316017316016,
     "padj": 0.3246753246753247,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO05",
+    "id": "Gene05",
     "control": [
       161,
       169,
@@ -112,10 +112,10 @@
     "log2fc": -0.5685802037620529,
     "p": 0.004329004329004329,
     "padj": 0.015984015984015984,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO06",
+    "id": "Gene06",
     "control": [
       169,
       165,
@@ -138,7 +138,7 @@
     "member": false
   },
   {
-    "id": "DEMO07",
+    "id": "Gene07",
     "control": [
       177,
       253,
@@ -158,10 +158,10 @@
     "log2fc": -0.22384054696959252,
     "p": 0.5606060606060606,
     "padj": 0.7474747474747474,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO08",
+    "id": "Gene08",
     "control": [
       13,
       47,
@@ -184,7 +184,7 @@
     "member": true
   },
   {
-    "id": "DEMO09",
+    "id": "Gene09",
     "control": [
       98,
       98,
@@ -204,10 +204,10 @@
     "log2fc": 0.6839472118667153,
     "p": 0.0021645021645021645,
     "padj": 0.01038961038961039,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO10",
+    "id": "Gene10",
     "control": [
       125,
       88,
@@ -227,10 +227,10 @@
     "log2fc": 1.184000186654035,
     "p": 0.0021645021645021645,
     "padj": 0.01038961038961039,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO11",
+    "id": "Gene11",
     "control": [
       118,
       124,
@@ -250,10 +250,10 @@
     "log2fc": 1.380215761702753,
     "p": 0.0021645021645021645,
     "padj": 0.01038961038961039,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO12",
+    "id": "Gene12",
     "control": [
       79,
       61,
@@ -273,10 +273,10 @@
     "log2fc": 1.3021891072300593,
     "p": 0.004329004329004329,
     "padj": 0.015984015984015984,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO13",
+    "id": "Gene13",
     "control": [
       171,
       206,
@@ -299,7 +299,7 @@
     "member": true
   },
   {
-    "id": "DEMO14",
+    "id": "Gene14",
     "control": [
       247,
       101,
@@ -319,10 +319,10 @@
     "log2fc": -1.4202076124678513,
     "p": 0.023809523809523808,
     "padj": 0.07142857142857142,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO15",
+    "id": "Gene15",
     "control": [
       95,
       94,
@@ -342,10 +342,10 @@
     "log2fc": -0.6117625600648713,
     "p": 0.08658008658008658,
     "padj": 0.20779220779220778,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO16",
+    "id": "Gene16",
     "control": [
       207,
       86,
@@ -368,7 +368,7 @@
     "member": false
   },
   {
-    "id": "DEMO17",
+    "id": "Gene17",
     "control": [
       111,
       110,
@@ -391,7 +391,7 @@
     "member": false
   },
   {
-    "id": "DEMO18",
+    "id": "Gene18",
     "control": [
       103,
       111,
@@ -414,7 +414,7 @@
     "member": false
   },
   {
-    "id": "DEMO19",
+    "id": "Gene19",
     "control": [
       85,
       137,
@@ -434,10 +434,10 @@
     "log2fc": -0.5207783223564665,
     "p": 0.23160173160173161,
     "padj": 0.3970315398886828,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO20",
+    "id": "Gene20",
     "control": [
       173,
       96,
@@ -457,10 +457,10 @@
     "log2fc": 0.11122162271990924,
     "p": 0.7857142857142857,
     "padj": 0.8760330578512397,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO21",
+    "id": "Gene21",
     "control": [
       198,
       197,
@@ -483,7 +483,7 @@
     "member": false
   },
   {
-    "id": "DEMO22",
+    "id": "Gene22",
     "control": [
       79,
       115,
@@ -503,10 +503,10 @@
     "log2fc": 1.0642697215114998,
     "p": 0.0021645021645021645,
     "padj": 0.01038961038961039,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO23",
+    "id": "Gene23",
     "control": [
       210,
       111,
@@ -526,10 +526,10 @@
     "log2fc": 0.9450955946600315,
     "p": 0.004329004329004329,
     "padj": 0.015984015984015984,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO24",
+    "id": "Gene24",
     "control": [
       10,
       136,
@@ -549,10 +549,10 @@
     "log2fc": 1.8674955997336864,
     "p": 0.0021645021645021645,
     "padj": 0.01038961038961039,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO25",
+    "id": "Gene25",
     "control": [
       154,
       126,
@@ -572,10 +572,10 @@
     "log2fc": 0.11084023960641191,
     "p": 0.16233766233766234,
     "padj": 0.3246753246753247,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO26",
+    "id": "Gene26",
     "control": [
       148,
       161,
@@ -595,10 +595,10 @@
     "log2fc": -0.4557559604938989,
     "p": 0.008658008658008658,
     "padj": 0.029684601113172542,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO27",
+    "id": "Gene27",
     "control": [
       149,
       1,
@@ -621,7 +621,7 @@
     "member": false
   },
   {
-    "id": "DEMO28",
+    "id": "Gene28",
     "control": [
       196,
       142,
@@ -644,7 +644,7 @@
     "member": false
   },
   {
-    "id": "DEMO29",
+    "id": "Gene29",
     "control": [
       72,
       70,
@@ -667,7 +667,7 @@
     "member": false
   },
   {
-    "id": "DEMO30",
+    "id": "Gene30",
     "control": [
       101,
       137,
@@ -690,7 +690,7 @@
     "member": false
   },
   {
-    "id": "DEMO31",
+    "id": "Gene31",
     "control": [
       130,
       95,
@@ -710,10 +710,10 @@
     "log2fc": -0.25294558821021007,
     "p": 0.4935064935064935,
     "padj": 0.7178276269185361,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO32",
+    "id": "Gene32",
     "control": [
       173,
       140,
@@ -733,10 +733,10 @@
     "log2fc": -0.27032689840014984,
     "p": 0.5238095238095238,
     "padj": 0.7332096474953618,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO33",
+    "id": "Gene33",
     "control": [
       178,
       165,
@@ -759,7 +759,7 @@
     "member": false
   },
   {
-    "id": "DEMO34",
+    "id": "Gene34",
     "control": [
       158,
       13,
@@ -779,10 +779,10 @@
     "log2fc": 0.3431445807970583,
     "p": 0.27056277056277056,
     "padj": 0.4478280340349306,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO35",
+    "id": "Gene35",
     "control": [
       82,
       129,
@@ -805,7 +805,7 @@
     "member": false
   },
   {
-    "id": "DEMO36",
+    "id": "Gene36",
     "control": [
       28,
       144,
@@ -828,7 +828,7 @@
     "member": false
   },
   {
-    "id": "DEMO37",
+    "id": "Gene37",
     "control": [
       94,
       71,
@@ -848,10 +848,10 @@
     "log2fc": 0.040930264054882044,
     "p": 0.7835497835497836,
     "padj": 0.8760330578512397,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO38",
+    "id": "Gene38",
     "control": [
       147,
       135,
@@ -871,10 +871,10 @@
     "log2fc": -0.3033921434499348,
     "p": 0.049783549783549784,
     "padj": 0.12576896787423103,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO39",
+    "id": "Gene39",
     "control": [
       20,
       310,
@@ -897,7 +897,7 @@
     "member": false
   },
   {
-    "id": "DEMO40",
+    "id": "Gene40",
     "control": [
       174,
       71,
@@ -920,7 +920,7 @@
     "member": false
   },
   {
-    "id": "DEMO41",
+    "id": "Gene41",
     "control": [
       213,
       217,
@@ -943,7 +943,7 @@
     "member": false
   },
   {
-    "id": "DEMO42",
+    "id": "Gene42",
     "control": [
       160,
       172,
@@ -966,7 +966,7 @@
     "member": false
   },
   {
-    "id": "DEMO43",
+    "id": "Gene43",
     "control": [
       70,
       29,
@@ -986,10 +986,10 @@
     "log2fc": -0.11226623225091198,
     "p": 0.7857142857142857,
     "padj": 0.8760330578512397,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO44",
+    "id": "Gene44",
     "control": [
       190,
       200,
@@ -1009,10 +1009,10 @@
     "log2fc": -0.4736225574528764,
     "p": 0.4458874458874459,
     "padj": 0.6904063678257226,
-    "member": true
+    "member": false
   },
   {
-    "id": "DEMO45",
+    "id": "Gene45",
     "control": [
       118,
       116,
@@ -1035,7 +1035,7 @@
     "member": false
   },
   {
-    "id": "DEMO46",
+    "id": "Gene46",
     "control": [
       126,
       154,
@@ -1058,7 +1058,7 @@
     "member": false
   },
   {
-    "id": "DEMO47",
+    "id": "Gene47",
     "control": [
       177,
       194,
@@ -1078,10 +1078,10 @@
     "log2fc": -0.7945410064086256,
     "p": 0.0367965367965368,
     "padj": 0.10389610389610389,
-    "member": false
+    "member": true
   },
   {
-    "id": "DEMO48",
+    "id": "Gene48",
     "control": [
       524,
       280,

@@ -6,7 +6,6 @@ const members = genes.filter(gene => gene.member).map(gene => gene.id);
 const total = genes.length;
 
 export default function GeneRankLab() {
-  const [order, setOrder] = useState<'desc' | 'asc'>('desc');
   const [step, setStep] = useState(0);
   const [running, setRunning] = useState(false);
   const [ready, setReady] = useState(false);
@@ -27,7 +26,7 @@ export default function GeneRankLab() {
     const timer = window.setTimeout(() => setStep(value => value + 1), 850);
     return () => window.clearTimeout(timer);
   }, [running, step]);
-  const ranked = rankGenes(genes, order);
+  const ranked = rankGenes(genes, 'desc');
   const scores = runningScores(ranked, members);
   const current = ranked[step - 1];
   const currentId = current?.id;
@@ -40,16 +39,16 @@ export default function GeneRankLab() {
     const headerHeight = table.querySelector('thead')?.getBoundingClientRect().height ?? 0;
     if (top < headerHeight) table.scrollTop += top - headerHeight;
     else if (top + row.clientHeight > table.clientHeight) table.scrollTop += top + row.clientHeight - table.clientHeight;
-  }, [currentId, order]);
+  }, [currentId]);
   const x = (index: number) => 48 + index / total * 480;
-  const y = (score: number) => 112 - score * 76;
+  const y = (score: number) => 116 - score * 120;
   const points = (values: number[]) => values.map((score, i) => `${x(i)},${y(score)}`).join(' ');
   const peak = scores.reduce((a, b) => Math.abs(b) > Math.abs(a) ? b : a, 0);
+  const peakIndex = scores.indexOf(peak);
   const reset = () => { setRunning(false); setStep(0); };
 
   return <div className="lab gene-rank-lab">
     <div className="lab-heading"><h3>遺伝子の順位とセットA</h3><span className="data-badge">人工データ · 全{total}遺伝子</span></div>
-    <fieldset className="lab-controls" disabled={!ready}><legend className="sr-only">遺伝子の並び順</legend><label>並び順<select value={order} onChange={e => { setOrder(e.target.value as typeof order); reset(); }}><option value="desc">Bで増加 → Bで減少</option><option value="asc">Bで減少 → Bで増加</option></select></label></fieldset>
     <div className="ranking-body">
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
       <div ref={tableRef} className="table-scroll market-table count-table" tabIndex={0} role="region" aria-label="全48遺伝子の順位とセット所属">
@@ -57,12 +56,15 @@ export default function GeneRankLab() {
       </div>
       <div className="score-panel">
         <svg viewBox="0 0 570 260" role="img" aria-labelledby="score-title score-desc">
-          <title id="score-title">セットAの重みなし順位曲線</title><desc id="score-desc">横軸は順位、縦軸は簡略スコア。点線は全体、実線は現在のステップまで。絶対値が最大のスコアは{peak.toFixed(2)}。最後は0です。</desc>
-          {[-1, 0, 1].map(value => <g key={value}><line x1="48" x2="528" y1={y(value)} y2={y(value)} stroke={value === 0 ? '#8e9b91' : '#e1e6df'} strokeDasharray={value === 0 ? undefined : '4 4'} /><text x="36" y={y(value) + 4} textAnchor="end">{value > 0 ? '+1' : value}</text></g>)}
-          <text x="48" y="17">簡略スコア</text>
+          <title id="score-title">セットAの重みなし順位曲線</title><desc id="score-desc">横軸は順位、縦軸は累積スコア（running ES）。点線は全体、実線は現在のステップまで。絶対値が最大のスコアは{peak.toFixed(2)}。最後は0です。</desc>
+          {[-0.5, 0, 0.5].map(value => <g key={value}><line x1="48" x2="528" y1={y(value)} y2={y(value)} stroke={value === 0 ? '#8e9b91' : '#e1e6df'} strokeDasharray={value === 0 ? undefined : '4 4'} /><text x="36" y={y(value) + 4} textAnchor="end">{value > 0 ? '+0.5' : value}</text></g>)}
+          <text x="48" y="17">累積スコア（running ES）</text>
           <polyline points={points(scores)} fill="none" stroke="#b9c5ba" strokeWidth="2" strokeDasharray="4 4" />
           <polyline points={points(scores.slice(0, step + 1))} fill="none" stroke="#1f6556" strokeWidth="3.5" strokeLinejoin="round" />
           {ranked.map((gene, i) => gene.member && <rect key={gene.id} x={x(i + 1) - 2} y="197" width="4" height="9" fill="#b77342" />)}
+          <line x1={x(peakIndex)} x2={x(peakIndex)} y1={y(0)} y2={y(peak)} stroke="#a86130" strokeDasharray="3 3" />
+          <circle cx={x(peakIndex)} cy={y(peak)} r="4" fill="#a86130" />
+          <text x={x(peakIndex) + (peakIndex > total / 2 ? -10 : 10)} y={y(peak) - 12} textAnchor={peakIndex > total / 2 ? 'end' : 'start'}>ES {peak > 0 ? '+' : ''}{peak.toFixed(2)}</text>
           <circle cx={x(step)} cy={y(scores[step])} r="5" fill="#1f6556" stroke="white" strokeWidth="2" />
           {[0, 12, 24, 36, total].map(value => <text key={value} x={x(value)} y="221" textAnchor="middle">{value}</text>)}
           <text x="288" y="252" textAnchor="middle">遺伝子の順位</text>
@@ -72,6 +74,6 @@ export default function GeneRankLab() {
         {reducedMotion && <p className="caption">動きを減らす設定のため、自動再生は無効です。</p>}
       </div>
     </div>
-    <div className="lab-foot"><p>◆はセットA。点線は全{total}遺伝子をたどった曲線です。現在の並び順で、絶対値が最大のスコアは{peak.toFixed(2)}。横軸は時間ではありません。</p><details><summary>スコアの計算方法</summary><p>セットAの{members.length}遺伝子では1 ÷ {members.length}、それ以外の{total - members.length}遺伝子では−1 ÷ {total - members.length}を足します。上昇の合計は+1、下降の合計は−1なので、最後は0に戻ります。重みづけ、NES・FDRの計算は行っていません。</p></details></div>
+    <div className="lab-foot"><p>◆はセットA。点線は全{total}遺伝子をたどった曲線です。0から最も離れた点の値（ES）は{peak > 0 ? '+' : ''}{peak.toFixed(2)}です。</p><details><summary>スコアの計算方法</summary><p>セットAの{members.length}遺伝子では1 ÷ {members.length}、それ以外の{total - members.length}遺伝子では−1 ÷ {total - members.length}を足します。上昇の合計は+1、下降の合計は−1なので、最後は0に戻ります。重みづけ、NES・FDRの計算は行っていません。</p></details></div>
   </div>;
 }

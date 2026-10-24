@@ -1,13 +1,21 @@
 ---
 import '../styles/global.css';
 const chapters = [
-  ['market', '序論：冬と夏の販売個数'], ['genes', '遺伝子とRNA'],
-  ['knockdown', 'shRNA'], ['rnaseq', 'RNA-seqとカウント表'],
+  ['market', '序論：夏の食卓'], ['genes', '遺伝子とRNA'],
+  ['rnaseq', 'RNA-seqの仕組み'],
   ['fold-change', '発現量の変化'], ['p-values', 'p値と多重検定'],
-  ['volcano', 'ボルケーノプロット'], ['sets', '遺伝子セット'],
-  ['ora', '過剰代表解析'], ['gsea', 'GSEA'],
-  ['paper', '原論文の図5'], ['review', '確認問題'],
+  ['volcano', 'ボルケーノプロット'],
+  ['gsea', 'GSEA'],
+  ['review', '確認問題'],
 ];
+const isIntroduction = Astro.url.pathname === '/';
+const isSimulation = Astro.url.pathname === '/simulation/';
+const isReferences = Astro.url.pathname === '/references/';
+const title = isSimulation ? 'RNA-seq解析体験' : isReferences ? '用語と参考文献' : isIntroduction ? '序論：夏の食卓' : 'RNA-seqとは';
+const pageChapters = isIntroduction ? chapters.slice(0, 1) : chapters.slice(1);
+const chapterOffset = isIntroduction ? 0 : 1;
+// A contents list with a single entry does not help navigation.
+const showContents = !isSimulation && !isReferences && pageChapters.length > 1;
 ---
 <!doctype html>
 <html lang="ja">
@@ -15,26 +23,36 @@ const chapters = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="遺伝子、RNA-seq、ボルケーノプロット、遺伝子セット、GSEAを学ぶ教材。" />
-    <meta name="theme-color" content="#f7f8f4" />
-    <title>遺伝子セットってなんだろう？ | what is BI</title>
+    <meta name="theme-color" content="#f6f5ef" />
+    <title>{title} | what is BI</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231f6556'/%3E%3Cpath d='M9 22V10m7 12V16m7 6V6' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E" />
   </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
     <header class="site-header">
-      <a href="#" class="brand" aria-label="what is BI ページの先頭"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>what is <b>BI</b><span class="brand-dot">.</span></a>
-      <nav aria-label="サイト内"><a href="#market">本文</a><a href="#glossary">用語</a><a href="#sources">参考文献</a></nav>
+      <a href="/" class="brand" aria-label="what is BI 序論"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>what is <b>BI</b><span class="brand-dot">.</span></a>
+      <nav aria-label="サイト内"><a href="/" aria-current={isIntroduction ? 'page' : undefined}>序論</a><a href="/rna-seq/" aria-current={!isIntroduction && !isSimulation && !isReferences ? 'page' : undefined}>RNA-seq</a><a href="/simulation/" aria-current={isSimulation ? 'page' : undefined}>解析体験</a><a href="/references/#glossary">用語</a><a href="/references/#sources">参考文献</a></nav>
     </header>
     <main id="main">
-      <header class="lesson-title"><h1>遺伝子セットってなんだろう？</h1></header>
-      <div class="reading-layout">
-        <aside class="contents">
-          <nav aria-label="目次"><p class="contents-label">目次</p><ol>{chapters.map(([id, label], i) => <li><a href={`#${id}`}><span>{String(i + 1).padStart(2, '0')}</span>{label}</a></li>)}</ol></nav>
-        </aside>
-        <article class="lesson-body"><noscript><p class="caption">JavaScriptが無効のため、表と図は静止状態で表示しています。</p></noscript><slot /></article>
+      <div class:list={['page-frame', { 'with-contents': showContents, 'simulation-layout': isSimulation }]}>
+        {!isReferences && <header class="lesson-title"><h1>{title}</h1></header>}
+        <div class="reading-layout">
+          {showContents && <aside class="contents">
+            <nav aria-label="目次"><p class="contents-label">目次</p><ol>{pageChapters.map(([id, label], i) => <li><a href={`#${id}`}><span>{String(i + chapterOffset + 1).padStart(2, '0')}</span>{label}</a></li>)}</ol></nav>
+          </aside>}
+          <article class="lesson-body">
+            <noscript><p class="caption">JavaScriptが無効のため、表と図は静止状態で表示しています。</p></noscript>
+            <slot />
+            {!isSimulation && !isReferences && <nav class="lesson-pagination" aria-label="ページ間の移動">
+              {isIntroduction
+                ? <a href="/rna-seq/" rel="next">次へ：RNA-seqとは <span aria-hidden="true">→</span></a>
+                : <><a href="/" rel="prev"><span aria-hidden="true">←</span> 序論：夏の食卓へ戻る</a><a href="/simulation/" rel="next">次へ：RNA-seq解析体験 <span aria-hidden="true">→</span></a></>}
+            </nav>}
+          </article>
+        </div>
       </div>
     </main>
-    <footer><a class="brand" href="#">what is <b>BI</b><span class="brand-dot">.</span></a><a href="#main">ページの先頭へ ↑</a></footer>
+    <footer class="site-footer"><a class="brand" href="/">what is <b>BI</b><span class="brand-dot">.</span></a><a href="#main">ページの先頭へ ↑</a></footer>
     <script>
       const links = document.querySelectorAll<HTMLAnchorElement>('.contents a');
       const observer = new IntersectionObserver(entries => {

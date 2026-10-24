@@ -1,0 +1,121 @@
+.analysis-simulation { margin-top: 0; }
+.simulation-toolbar, .simulation-terminal-bar, .simulation-terminal-actions, .simulation-output-heading, .simulation-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; }
+.simulation-toolbar { justify-content: flex-end; }
+.simulation-target-note { margin: 4px 0 12px; color: var(--muted); font-size: var(--fs-xs); }
+
+/* Step list */
+.lesson-body .simulation-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; gap: 8px; margin: 16px 0 20px; }
+.lesson-body .simulation-steps li { margin: 0; }
+.simulation-steps button { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; padding: 12px; font-size: var(--fs-md); line-height: 1.45; }
+.simulation-steps button span { font-size: var(--fs-xs); font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.simulation-steps button:disabled { opacity: 1; color: #8b968d; background: transparent; border-style: dashed; }
+.simulation-steps button:disabled span { color: #a0aaa2; }
+.simulation-steps button[aria-current="step"] { background: var(--green); color: #fff; border-color: var(--green); }
+.simulation-steps button[aria-current="step"] span { color: #cfe2d8; }
+
+/* Workspace */
+.simulation-workspace { border: 1px solid var(--line); border-radius: 12px; background: var(--paper); overflow: hidden; scroll-margin-top: 16px; }
+.simulation-step-heading { padding: 24px 28px 0; }
+.simulation-step-heading > span { color: var(--green); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.08em; }
+.simulation-step-heading h2 { margin: 6px 0 10px; font-size: 24px; line-height: 1.5; color: var(--ink); }
+.simulation-step-heading h2:last-child { margin-bottom: 20px; }
+.simulation-step-heading h2:focus { outline: none; }
+.simulation-step-heading h2:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; border-radius: 2px; }
+.simulation-step-heading p { margin-bottom: 20px; max-width: var(--measure); }
+
+/* Command */
+.simulation-terminal { background: #182c26; color: #edf4ed; margin: 0 28px; border-radius: 8px; overflow: hidden; }
+.simulation-terminal-bar { padding: 8px 16px; background: #223c32; font-size: var(--fs-xs); font-weight: 700; color: #bed3c8; letter-spacing: 0.06em; }
+.simulation-terminal pre { white-space: pre; overflow-x: auto; margin: 0; padding: 18px 16px; line-height: 1.8; font-size: var(--fs-sm); }
+.simulation-terminal pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+.simulation-terminal pre:focus-visible { outline-offset: -3px; }
+.simulation-terminal-actions { justify-content: flex-end; padding: 10px 16px; border-top: 1px solid #395146; font-size: var(--fs-sm); color: #bed3c8; }
+.simulation-terminal-check { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; color: #dcebcf; font-size: 30px; font-weight: 700; }
+.simulation-terminal-actions button.primary { background: #dcebcf; color: #173d30; border-color: #dcebcf; }
+.simulation-terminal-actions button.primary:hover:not(:disabled) { background: #c6ddb4; color: #173d30; border-color: #c6ddb4; }
+.simulation-terminal :focus-visible { outline-color: #f0c38f; }
+.simulation-script { border-top: 1px solid #395146; }
+.simulation-script summary { display: flex; align-items: center; min-height: 44px; padding: 0 16px; font-size: var(--fs-sm); color: #bed3c8; cursor: pointer; }
+.simulation-script summary:hover { color: #edf4ed; }
+.simulation-script pre { max-height: 420px; border-top: 1px solid #395146; background: #13241f; font-size: var(--fs-xs); line-height: 1.7; }
+
+/* Output */
+.simulation-output { margin: 28px; }
+.simulation-output-heading { border-bottom: 1px solid var(--line); margin-bottom: 16px; padding-bottom: 10px; }
+.simulation-output-heading h3 { margin: 0; font-size: 18px; color: var(--ink); }
+.simulation-output-heading > span { font-size: var(--fs-xs); font-weight: 700; color: var(--green); }
+.simulation-output > p { max-width: var(--measure); }
+.simulation-output .table-scroll { border: 1px solid var(--line); border-radius: var(--radius-sm); margin: 0 0 20px; }
+.simulation-output .count-table { max-height: 440px; }
+.simulation-output table { font-size: var(--fs-sm); width: 100%; font-variant-numeric: tabular-nums; }
+.simulation-output caption { padding: 10px 12px; background: var(--paper); }
+.simulation-output th, .simulation-output td { padding: 8px 12px; white-space: nowrap; }
+.simulation-output td { text-align: right; }
+.simulation-output th:first-child { text-align: left; }
+.simulation-output tbody th button { min-height: 36px; padding: 4px 12px; font-size: var(--fs-sm); }
+.simulation-selected { background: var(--green-tint); }
+.simulation-selected th { box-shadow: inset 3px 0 var(--green); }
+.simulation-selected button { color: var(--green); border-color: var(--green); }
+.condition-tag { display: inline-block; border-radius: 999px; padding: 2px 10px; background: var(--green-tint); color: var(--green); font-weight: 600; }
+.condition-tag.treat { color: var(--orange-text); background: var(--orange-tint); }
+.simulation-downloads { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: var(--fs-md); margin-top: 16px; }
+.simulation-downloads a { display: inline-flex; align-items: center; min-height: 32px; }
+.simulation-downloads button { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: var(--fs-sm); }
+.simulation-downloads button svg { width: 1em; height: 1em; flex: none; }
+.simulation-pages { display: flex; justify-content: center; align-items: center; gap: 14px; margin: 4px 0 20px; font-size: var(--fs-sm); }
+.simulation-pages button { min-width: 72px; padding: 6px 10px; font-size: var(--fs-sm); }
+
+/* Plot thresholds and results */
+.simulation-thresholds { display: flex; gap: 12px 24px; flex-wrap: wrap; align-items: center; padding: 12px 16px; background: var(--surface); border-radius: 8px; font-size: var(--fs-md); margin-bottom: 16px; }
+.simulation-thresholds label { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.simulation-thresholds select { min-height: 40px; padding: 4px 28px 4px 10px; }
+.simulation-plot-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 6px; }
+.simulation-plot-toolbar button { padding: 5px 12px; font-size: var(--fs-sm); white-space: nowrap; }
+.simulation-plot-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; font-size: var(--fs-sm); color: var(--muted); }
+.simulation-plot-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.simulation-key { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.simulation-key-decrease { background: #2c6b89; }
+.simulation-key-increase { background: #a86130; }
+.simulation-key-other { background: #65776c; opacity: .55; }
+.simulation-volcano { width: 100%; display: block; margin: 8px 0 0; cursor: crosshair; }
+.simulation-volcano text { font-size: 12px; fill: var(--ink); }
+.simulation-volcano.compact-chart text { font-size: 13px; }
+.simulation-dot { pointer-events: none; }
+.simulation-dot-other { fill: #65776c; opacity: .28; }
+.simulation-dot-decrease { fill: #2c6b89; opacity: .8; }
+.simulation-dot-increase { fill: #a86130; opacity: .8; }
+.simulation-selected-point { fill: none; stroke: var(--ink); stroke-width: 2.5; pointer-events: none; }
+.simulation-volcano + .caption { margin-bottom: 20px !important; }
+.simulation-gene { padding: 18px 20px; background: var(--surface); border-radius: 8px; margin-top: 20px; }
+.simulation-gene h3 { margin: 0 0 4px; font-size: 17px; color: var(--ink); }
+.simulation-gene p { margin: 0 0 12px; font-size: var(--fs-sm); color: var(--muted); }
+.simulation-bars > div { display: grid; grid-template-columns: minmax(0, 144px) minmax(0, 1fr) 52px; align-items: center; gap: 12px; font-size: var(--fs-sm); margin: 8px 0; }
+.simulation-bars strong { text-align: right; font-variant-numeric: tabular-nums; }
+.simulation-bar-track { background: #e1e7dc; height: 14px; border-radius: 2px; overflow: hidden; }
+.simulation-bar-track i { display: block; height: 100%; }
+.simulation-footer { justify-content: flex-end; margin-top: 28px; padding: 16px 28px; border-top: 1px solid var(--line); background: #f8f8f2; font-size: var(--fs-sm); color: var(--muted); }
+
+/* Data and method note behind the ? mark */
+.simulation-toolbar { position: relative; justify-content: space-between; }
+.simulation-about { display: flex; align-items: center; gap: 6px; }
+.simulation-method summary { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--line-strong); border-radius: 50%; background: var(--paper); color: var(--muted); font-size: var(--fs-xs); font-weight: 700; line-height: 1; cursor: pointer; }
+.simulation-method summary::before { content: none; }
+.simulation-method summary:hover, .simulation-method[open] summary { border-color: var(--green); color: var(--green); }
+.simulation-method-panel { position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 10; max-width: 40rem; max-height: min(70vh, 32rem); overflow: auto; padding: 4px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); box-shadow: 0 8px 24px rgba(33, 58, 47, 0.14); color: var(--text); font-size: var(--fs-md); }
+.simulation-method-panel p { line-height: 1.85; }
+
+@media (max-width: 760px) {
+  .lesson-body .simulation-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .simulation-steps button { flex-direction: row; align-items: baseline; gap: 8px; padding: 10px 12px; font-size: var(--fs-sm); }
+  .simulation-step-heading { padding: 20px 16px 0; }
+  .simulation-step-heading h2 { font-size: 21px; }
+  .simulation-terminal { margin: 0 16px; }
+  .simulation-terminal pre { font-size: var(--fs-xs); padding: 14px; }
+  .simulation-output { margin: 24px 16px; }
+  .simulation-thresholds { padding: 8px 12px; gap: 0 16px; }
+  .simulation-gene { padding: 14px; }
+  .simulation-footer { padding: 14px 16px; }
+  .simulation-footer button { width: 100%; }
+  .simulation-bars > div { grid-template-columns: minmax(0, 118px) minmax(0, 1fr) 44px; gap: 8px; }
+  .simulation-method-panel { padding: 2px 16px; }
+}

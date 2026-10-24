@@ -1,0 +1,66 @@
+---
+import { runningScores } from '../data/enrichment';
+
+const ranked = Array.from({ length: 64 }, (_, index) => ({ id: `G${index + 1}`, log2fc: 2 - index * 4 / 63 }));
+const examples = [
+  {
+    title: '上位に集まる',
+    description: 'セット内の16遺伝子が左側に集まり、曲線に一つの山ができる模式図。',
+    positions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20],
+  },
+  {
+    title: '上位と下位に分かれる',
+    description: 'セット内の16遺伝子が左端に9個、右端に7個に分かれ、曲線に山と谷ができる模式図。',
+    positions: [2, 4, 6, 8, 10, 12, 14, 16, 18, 51, 53, 55, 57, 59, 61, 63],
+  },
+  {
+    title: '全体に分散する',
+    description: 'セット内の16遺伝子が順位の全域にほぼ等間隔で現れ、曲線は0付近を小さく上下する模式図。',
+    positions: [2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62],
+  },
+  {
+    title: '中央付近に集まる',
+    description: 'セット内の16遺伝子が順位の中央付近に集まり、両端にはない模式図。曲線は左側で下がり、中央付近で上がったあと、右側で0に戻る。',
+    positions: [17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47],
+  },
+].map(example => {
+  const members = example.positions.map(rank => ranked[rank - 1].id);
+  const scores = runningScores(ranked, members);
+  return { ...example, scores, points: scores.map((score, rank) => `${38 + rank * 6},${110 - score * 90}`).join(' ') };
+});
+---
+
+<figure class="shape-comparison">
+  <figcaption>同じ64遺伝子・セット内16遺伝子をlog₂ fold changeの大きい順に並べた模式図</figcaption>
+  <div class="shape-comparison-grid">
+    {examples.map(example => (
+      <div class="shape-example">
+        <h4>{example.title}</h4>
+        <svg viewBox="0 0 460 270" role="img" aria-label={example.description}>
+          <line class="zero-line" x1="38" x2="422" y1="110" y2="110" />
+          <text x="28" y="25" text-anchor="end">+1</text>
+          <text x="28" y="115" text-anchor="end">0</text>
+          <text x="28" y="205" text-anchor="end">−1</text>
+          <polyline class="score-line" points={example.points} />
+          {example.positions.map(rank => <line class="member-tick" x1={38 + rank * 6} x2={38 + rank * 6} y1="215" y2="230" />)}
+          <text x="38" y="262">Treatで増加</text>
+          <text x="422" y="262" text-anchor="end">Treatで減少</text>
+        </svg>
+      </div>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .shape-comparison { margin: 2rem 0; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  .shape-comparison figcaption { margin-bottom: 1rem; color: var(--muted); font-size: .88rem; }
+  .shape-comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; }
+  .shape-example { padding: .75rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+  .shape-example h4 { margin: 0 0 .5rem; font-size: 1rem; }
+  .shape-example svg { display: block; width: 100%; }
+  .shape-example text { fill: var(--muted); font-size: 18px; }
+  .shape-example .zero-line { stroke: var(--line-strong); }
+  .shape-example .score-line { fill: none; stroke: var(--green); stroke-width: 3; stroke-linejoin: round; }
+  .shape-example .member-tick { stroke: var(--orange); stroke-width: 3; }
+  @media (max-width: 600px) { .shape-example text { font-size: 20px; } }
+</style>

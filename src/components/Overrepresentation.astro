@@ -8,5 +8,5 @@ const selectedHits = selected.filter(gene => gene.member).length;
 <div class="ora-summary gene-ora">
   <div><span>全{genes.length}遺伝子のセットA</span><strong>{allHits}<small> / {genes.length}遺伝子</small></strong><span>{(allHits / genes.length * 100).toFixed(1)}%</span></div>
   <span class="compare-symbol" aria-hidden="true">→</span>
-  <div><span>Bで減少の大きい{selected.length}遺伝子のセットA</span><strong>{selectedHits}<small> / {selected.length}遺伝子</small></strong><span>{(selectedHits / selected.length * 100).toFixed(1)}%</span></div>
+  <div><span>Treatで減少の大きい{selected.length}遺伝子のセットA</span><strong>{selectedHits}<small> / {selected.length}遺伝子</small></strong><span>{(selectedHits / selected.length * 100).toFixed(1)}%</span></div>
 </div>

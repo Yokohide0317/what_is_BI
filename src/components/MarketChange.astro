@@ -1,0 +1,33 @@
+---
+import { change, foldChange, percent, products } from '../data/market';
+const examples = products
+  .filter(product => ['curry', 'egg', 'stew'].includes(product.id))
+  .sort((a, b) => foldChange(b) - foldChange(a));
+---
+
+<div id="market-change" class="market-change">
+  <h3>夏の売上を冬の売上で割る</h3>
+  <figure class="sales-ratio-figure">
+    <div class="sales-ratio-crop">
+      <img
+        src="/images/market-sales-ratio.png"
+        alt="カレールーの売上は冬25,000円、夏37,500円。夏の売上を冬の売上で割ると1.5倍。"
+        width="1536" height="1024" loading="lazy" decoding="async"
+      />
+    </div>
+  </figure>
+  <div class="ratio-examples">
+    {examples.map(product => <figure class="ratio-example">
+      <figcaption>{product.name}</figcaption>
+      <svg viewBox="0 0 200 74" role="img" aria-label={`冬を1とすると、夏は${foldChange(product).toFixed(1)}倍`}>
+        <text x="0" y="23">冬</text>
+        <rect x="28" y="10" width="90" height="18" rx="3" class="winter-bar" />
+        <text x="0" y="56">夏</text>
+        <rect x="28" y="43" width={90 * foldChange(product)} height="18" rx="3" class="summer-bar" />
+        <line x1="118" y1="5" x2="118" y2="68" class="ratio-reference" />
+      </svg>
+      <div class="ratio-example-result"><strong>{foldChange(product).toFixed(1)}倍</strong><span>{percent(change(product))}</span></div>
+      <p>{foldChange(product) > 1 ? '冬より増えた' : foldChange(product) < 1 ? '冬より減った' : '冬と同じ'}</p>
+    </figure>)}
+  </div>
+</div>

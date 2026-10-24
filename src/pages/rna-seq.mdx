@@ -1,0 +1,176 @@
+---
+layout: ../layouts/Lesson.astro
+---
+import VolcanoLab from '../components/VolcanoLab';
+import GeneCounts from '../components/GeneCounts.astro';
+import GeneCountQuestion from '../components/GeneCountQuestion.astro';
+import GeneRankLab from '../components/GeneRankLab';
+import CurryEnrichment from '../components/CurryEnrichment';
+import GseaShapeComparison from '../components/GseaShapeComparison.astro';
+
+<section id="genes">
+
+## 2. 遺伝子とRNA
+
+遺伝子は、RNAを作る情報を持つDNAの領域です。タンパク質を作る遺伝子では、DNAの情報がmRNAに写され、そのmRNAをもとにタンパク質が作られます。
+
+<p className="molecular-path">DNA → mRNA → タンパク質</p>
+
+DNAからRNAを作る過程を転写、mRNAからタンパク質を作る過程を翻訳と呼びます。
+
+RNA量を測ると、どの遺伝子がどれくらい発現しているかを調べられます。
+
+<aside className="callout rna-caution" aria-label="注意">
+  <strong>注意</strong>
+  <p>翻訳活性やタンパク質の翻訳後修飾、分解などの影響もあるため、RNA量からタンパク質の量や活性がそのまま分かるとは限りません。</p>
+  <div className="rna-caution-relations"><p>RNA量 ＝ タンパク質量</p><p>RNA量 ＝ タンパク質の活性</p></div>
+  <p>これらが必ずしも成り立つわけではないことに注意してください。</p>
+</aside>
+</section>
+
+<section id="rnaseq">
+
+## 3. RNA-seqの仕組み
+
+<figure className="rna-workflow-figure">
+  <a href="/images/rna-seq-workflow.png" target="_blank" rel="noopener" aria-label="RNA-seqの仕組みの図を拡大する"><img src="/images/rna-seq-workflow.png" width="1536" height="1024" alt="①は細胞内でDNAからRNAへ転写する過程。②では細胞サンプルからRNAを抽出して断片化する。③逆転写でcDNAに変換し、④次世代シーケンサーで配列を読む。⑤参照配列と照合して由来する遺伝子を調べ、⑥遺伝子ごとにリードを数えてRNAの量を推定する。" /></a>
+</figure>
+
+一般的な短鎖RNA-seqでは、細胞サンプルからRNAを抽出して断片化し、cDNAに変換してから次世代シーケンサーで読みます。読み取った配列をリードと呼びます。
+
+配列を照合すると、<strong>どの遺伝子に由来するか（定性）</strong>が分かります。さらに、遺伝子ごとにリードを数えることで、<strong>RNAがどれくらいあるか（定量）</strong>を推定します。
+
+### 数えた結果を、カウント表にする
+
+表の<strong>1行は1遺伝子、1列は1細胞サンプル</strong>です。ControlとTreatを比べるときも、各群で複数の細胞サンプルを測り、サンプル間のばらつきを調べます。
+
+<GeneCounts />
+
+<GeneCountQuestion />
+
+</section>
+
+<section id="fold-change">
+
+## 4. 発現量の変化
+
+fold changeは発現量の比です。ここではTreatの平均をControlの平均で割ります。その比を2を底とする対数で表したものが、log₂ fold changeです。
+
+| Treat / Control | log₂ fold change | 意味 |
+| --: | --: | :-- |
+| 2 | +1 | Treatで2倍 |
+| 1 | 0 | 同じ |
+| 0.5 | −1 | Treatで半分 |
+
+正ならTreatで多く、負ならTreatで少なくなります。比較の向きを逆にすると、符号も逆になります。
+</section>
+
+<section id="p-values">
+
+## 5. p値と多重検定
+
+平均が違っていても、サンプルのばらつきで説明できるかもしれません。p値は、差がないという仮定と検定の前提のもとで、観測された差以上に極端な結果が出る確率です。
+
+多数の遺伝子を同時に調べると、偶然小さなp値になるものも増えます（「数打てば当たる」という考え方です）。Benjamini–Hochberg（BH）法などでp値を調整し、調整済みp値を使います。
+
+### DESeq2の結果を表で見る
+
+DESeq2で解析すると、遺伝子ごとに発現量の変化やp値をまとめた結果表が得られます。主な列を見てみましょう。比較の向きはTreat / Controlです。
+
+<div className="table-scroll count-table" role="region" aria-label="DESeq2の結果表の模式例" tabIndex="0">
+
+| 遺伝子名 | baseMean | log2FoldChange | p-value | padj |
+| :-- | --: | --: | --: | --: |
+| Gene01 | 120.0 | −1.00 | 0.001 | 0.005 |
+| Gene02 | 250.0 | +1.50 | 0.004 | 0.010 |
+| Gene03 | 85.0 | +0.10 | 0.650 | 0.650 |
+| Gene04 | 180.0 | −0.80 | 0.030 | 0.050 |
+| Gene05 | 60.0 | +0.30 | 0.200 | 0.250 |
+
+</div>
+
+<p className="caption">列の読み方を示す架空の数値です。</p>
+
+- **遺伝子名**：どの遺伝子の結果かを示します。
+- **baseMean**：正規化したカウントの、全サンプルでの平均です。
+- **log2FoldChange（Log2FC）**：発現量の変化をlog₂で表した値です。正ならTreatで多く、負ならTreatで少なくなります。
+- **p-value**：群間の差を検定したp値です。DESeq2の列名は `pvalue` です。
+- **padj**：多重検定を考慮した調整済みp値です。DESeq2では標準でBH法を使います。
+
+<p className="caption">列の定義：<a href="https://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2の公式解説</a></p>
+</section>
+
+<section id="volcano">
+
+## 6. ボルケーノプロット
+
+表の1行を、図の1点にします。<strong>1点は1遺伝子</strong>です。
+
+<div className="axis-cards"><div><span>横軸</span><h3>log₂ fold change</h3><p>変化の方向と大きさ。左はTreatで少なく、右はTreatで多い。</p></div><div><span>縦軸</span><h3>−log₁₀ 調整済みp値</h3><p>上に行くほど調整済みp値が小さい。</p></div></div>
+
+<VolcanoLab client:load />
+</section>
+
+<section id="gsea">
+
+## 7. GSEA
+
+GSEA（遺伝子セットエンリッチメント解析）は、遺伝子セット（ある働きに関わる遺伝子の集まり）が、発現量の変化などで並べた順位の上位や下位に偏っているかを調べる方法です。
+
+### カレーの材料の位置を、1本の曲線にする
+
+序論では、121商品を「夏 ÷ 冬」が大きい順に並べ、カレーの材料11品を茶色で示しました。同じ並びを左からたどり、材料の位置では曲線を上げ、それ以外の商品では下げます。
+
+<CurryEnrichment client:load />
+
+材料が左側に集まっているので、曲線は35位まで大きく上がります。35位までに材料11品がすべて現れ、その後は材料以外の商品だけになるため、曲線は0まで下がり続けます。
+
+### 縦軸は、何を足し引きした値？
+
+縦軸は、左から順に足し引きした<strong>累積スコア（running ES）</strong>です。この図では0から始め、カレーの材料なら1/11を足し、それ以外なら1/110を引きます。
+
+材料11品で足す量の合計は+1、その他110品で引く量の合計は−1です。そのため、最後は0に戻ります。途中で0より上なら、材料11品のうちそこまでに現れた割合が、その他110品のうちそこまでに現れた割合を上回っています。売上の金額や増減率そのものを縦軸に描いているわけではありません。
+
+曲線が<strong>0から最も離れた点の値</strong>を、エンリッチメントスコア（ES）と呼びます。この例では35位の約+0.78です。ESが正なら順位の上位側、負なら下位側に材料が偏っていることを示します。
+
+### 商品を遺伝子に、レシピを遺伝子セットに置き換える
+
+GSEAの図も、曲線と、その下に並ぶ縦線を同じ順位軸で読みます。縦線は遺伝子セットに含まれる遺伝子の位置です。曲線の山や谷を見ると、そのセットが順位のどちら側に集まっているかが分かります。
+
+次の図では48遺伝子をlog₂ fold changeの大きい順に並べます。左はTreatで増加、右はTreatで減少した遺伝子です。「セットA」は、この並びの左側に多く、右側にも一部が現れるよう配置した16遺伝子の模式セットです。
+
+<GeneRankLab client:load />
+
+セットAのうち10遺伝子は左から12位までに集まり、残り6遺伝子は39位以降にあります。曲線は左側で山を作り、中央で0より下まで下がってから、右側で再び上がります。
+
+### 山や谷は、順位のどこにできる？
+
+曲線は、セット内の遺伝子が現れると上がり、それ以外では下がります。左側に縦線が集まれば、早い段階で上がって山ができます。右側に集まれば、先に下がって谷ができます。山や谷がどの位置にあるかを、縦線と一緒に見ます。以下の模式図はlog₂ fold changeの大きい順で、左端は正、右端は負です。
+
+<GseaShapeComparison />
+
+「上位に集まる」図では、セット内の遺伝子が上位に集まり、一つの山ができます。「上位と下位に分かれる」図では、左側で上がった曲線が、セット外の遺伝子が続く中央で下がり、右側のセット内遺伝子で再び上がります。山と谷が続く形は、S字のように見えることがあります。
+
+「上位と下位に分かれる」図では、同じセットの中にTreatで増加した遺伝子と減少した遺伝子の両方があります。幅広い働きを含むセットかもしれませんが、曲線だけでは理由は決まりません。どの遺伝子がそれぞれの端にあるかを確かめます。
+
+ESは0から最も離れた山か谷の値を一つ選ぶため、両側の分布はES一つでは表せません。上位と下位に分かれる図のESは正ですが、縦線を見ると下位にも7遺伝子あります。
+
+下の2図では、セット内の遺伝子が全域に分散する場合と、中央付近に多い場合を示しています。全域に分散すると曲線は0付近を小さく上下し、片側への偏りは見えにくくなります。中央に多い場合も、上位か下位のどちらかに集まる形ではありません。ただし、分布や曲線の形だけで統計的な有意性は決められません。
+
+### 「意味があるか」は、曲線だけでは決まらない
+
+まず比較の向きと順位づけに使った値を確かめ、縦線がどちら側に集まるかを見ます。次に、順位の先頭から山の位置までに現れるセット内の遺伝子（ESが負なら、谷の位置から末尾まで）を確かめます。この遺伝子群を<strong>leading-edge（リーディングエッジ）</strong>と呼びます。「上位と下位に分かれる」図では、上位側の9遺伝子が該当します。それらの遺伝子について、ControlとTreatの各サンプルの発現量も確かめます。
+
+セットの定義が、調べたい働きに合っているかも確かめます。上位への偏りが見えても、セット内の遺伝子すべてが増加したことや、その働きが活性化したことまでは分かりません。山の高さだけで統計的な有意性も判断できません。
+
+ここまでの曲線はいずれも、セット内の項目で同じ量を足す「重みなし」の計算を使っています。GSEAの標準設定では、セット内の遺伝子で足す量を、順位づけに使った指標の絶対値に応じて変えます。ESを正規化したものがNESで、偏りの統計的な評価には置換検定やFDRを使います。
+
+<p className="caption">出典：<a href="https://docs.gsea-msigdb.org/GSEA/GSEA_User_Guide/#enrichment-score-es">GSEA User Guide（ESと図の読み方）</a>、<a href="https://docs.gsea-msigdb.org/GSEA/GSEA_FAQ/#10-can-i-analyze-gene-sets-that-were-constructed-from-both-up-and-down-regulated-genes">GSEA FAQ（増加・減少する遺伝子を含むセット）</a></p>
+</section>
+
+<section id="review">
+
+## 8. 確認問題
+
+<div className="questions"><details><summary>カウント表の1行と1列は何を表す？</summary><p>1行は1遺伝子、1列は1サンプルです。複数のサンプルから、条件の違いとサンプル間のばらつきを調べます。</p></details><details><summary>shCaNは、E2F1のDNAを消す操作？</summary><p>違います。CaN Aαを標的としてmRNAを減らす仕組みを利用する操作です。E2F1を直接狙うものでも、DNAを消すものでもありません。</p></details><details><summary>ボルケーノの赤い点は、必ず有意差がある？</summary><p>色の意味は凡例によります。原論文の図5BではHallmark E2F標的遺伝子を示します。点の高さと色の意味は別です。</p></details></div>
+</section>

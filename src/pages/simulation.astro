@@ -1,0 +1,30 @@
+---
+import Lesson from '../layouts/Lesson.astro';
+import AnalysisSimulation from '../components/AnalysisSimulation';
+---
+<Lesson>
+  <AnalysisSimulation client:load>
+    <details class="simulation-method">
+      <summary aria-label="このシミュレーションのデータと計算" title="このシミュレーションのデータと計算">?</summary>
+      <div class="simulation-method-panel">
+        <p>Satoらの論文で参照されたRNA-seqデータから、shControlとshCaN Aαを各3サンプルずつ使います。解析ファイルではshCaN AαをshPPP3CAと表記しています。SalmonのscaledTPMを整数に丸めた表をRのDESeq2に入力しました。したがって、表示する数値は生のリード数ではありません。</p>
+        <p>比較はTreat（shCaN Aα）/ Control（shControl）、デザインはconditionのみです。DESeq2で正規化、分散推定、Wald検定、BH法によるp値の調整を行いました。19,705遺伝子の結果を読み込み、表示条件に合う全件をCSVに保存できます。図は表示範囲内の点を示しています。ブラウザーでは解析を再実行しません。解説ページの48遺伝子の人工データとは別です。</p>
+        <p>GSEAでは、同じ6サンプルの正規化カウントをもとに、17,155遺伝子をsignal-to-noiseで並べました。遺伝子セットはMSigDB 2024.1.HsのHallmarkとC6です。GSEApyで遺伝子セットを1,000回置換して評価しました。論文の図5C–Eと同じ3セットを表示します。NESとFDRはこの再解析の値で、論文掲載値とは異なります。曲線の各縦線は、順位表に存在するセット内遺伝子を示します。</p>
+        <p><a href="https://doi.org/10.1073/pnas.2414618121">原論文</a> · <a href="https://ddbj.nig.ac.jp/resource/sra-submission/DRA011729">RNA-seqデータ</a> · <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2の公式解説</a> · <a href="https://www.gsea-msigdb.org/gsea/msigdb_license_terms.jsp">MSigDBの利用条件（CC BY 4.0）</a></p>
+      </div>
+    </details>
+  </AnalysisSimulation>
+</Lesson>
+
+<script>
+  // Close the note with Escape or a click outside it. The note sits inside a React island, so look it up each time.
+  const openNote = () => document.querySelector<HTMLDetailsElement>('.simulation-method[open]');
+  document.addEventListener('keydown', event => {
+    const note = openNote();
+    if (event.key === 'Escape' && note) { note.open = false; note.querySelector('summary')?.focus(); }
+  });
+  document.addEventListener('click', event => {
+    const note = openNote();
+    if (note && !note.contains(event.target as Node)) note.open = false;
+  });
+</script>
