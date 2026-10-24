@@ -4,7 +4,7 @@ const displayedSamples = 3;
 ---
 <div class="table-scroll count-table expression-counts" role="region" aria-label="全48遺伝子、ControlとTreat各3サンプルの人工データ" tabindex="0">
   <table>
-    <caption>人工データ · 各群3サンプルを抜粋</caption>
+    <caption>各群3サンプルを抜粋</caption>
     <thead><tr><th scope="col">遺伝子</th>{['Control', 'Treat'].flatMap(condition => Array.from({ length: displayedSamples }, (_, i) => <th scope="col">{condition}-{i + 1}</th>))}</tr></thead>
     <tbody>{genes.map(gene => <tr><th scope="row">{gene.id}</th>{[...gene.control.slice(0, displayedSamples), ...gene.treated.slice(0, displayedSamples)].map(value => <td>{value}</td>)}</tr>)}</tbody>
   </table>

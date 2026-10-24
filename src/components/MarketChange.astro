@@ -1,7 +1,7 @@
 ---
 import { change, foldChange, percent, products } from '../data/market';
 const examples = products
-  .filter(product => ['curry', 'egg', 'stew'].includes(product.id))
+  .filter(product => ['carrot', 'egg', 'chinese-cabbage'].includes(product.id))
   .sort((a, b) => foldChange(b) - foldChange(a));
 ---
 
@@ -11,7 +11,7 @@ const examples = products
     <div class="sales-ratio-crop">
       <img
         src="/images/market-sales-ratio.png"
-        alt="カレールーの売上は冬25,000円、夏37,500円。夏の売上を冬の売上で割ると1.5倍。"
+        alt="にんじんの売上は冬15,000円、夏42,000円。夏の売上を冬の売上で割ると2.8倍。冬を基準に180%増。"
         width="1536" height="1024" loading="lazy" decoding="async"
       />
     </div>
@@ -19,7 +19,7 @@ const examples = products
   <div class="ratio-examples">
     {examples.map(product => <figure class="ratio-example">
       <figcaption>{product.name}</figcaption>
-      <svg viewBox="0 0 200 74" role="img" aria-label={`冬を1とすると、夏は${foldChange(product).toFixed(1)}倍`}>
+      <svg viewBox="0 0 300 74" role="img" aria-label={`冬を1とすると、夏は${foldChange(product).toFixed(1)}倍`}>
         <text x="0" y="23">冬</text>
         <rect x="28" y="10" width="90" height="18" rx="3" class="winter-bar" />
         <text x="0" y="56">夏</text>

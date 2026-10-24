@@ -48,7 +48,7 @@ export default function GeneRankLab() {
   const reset = () => { setRunning(false); setStep(0); };
 
   return <div className="lab gene-rank-lab">
-    <div className="lab-heading"><h3>遺伝子の順位とセットA</h3><span className="data-badge">人工データ · 全{total}遺伝子</span></div>
+    <div className="lab-heading"><h3>遺伝子の順位とセットA</h3></div>
     <div className="ranking-body">
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
       <div ref={tableRef} className="table-scroll market-table count-table" tabIndex={0} role="region" aria-label="全48遺伝子の順位とセット所属">

@@ -38,8 +38,7 @@ export default function VolcanoLab() {
     rowRefs.current.get(id)?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
   };
   return <div className="lab volcano-lab">
-    <div className="lab-heading"><h3>遺伝子の表とボルケーノプロット</h3><span className="data-badge">人工データ · 全48遺伝子</span></div>
-    <p className="lab-intro">TreatとControlの比較。Gene01〜48は架空の遺伝子です。原論文のshCaN実験ではありません。</p>
+    <div className="lab-heading"><h3>遺伝子の表とボルケーノプロット</h3></div>
     <div className="plot-legend"><span><b className="volcano-mark status-decrease">●</b> Treatで減少</span><span><b className="volcano-mark status-increase">●</b> Treatで増加</span><span><b className="volcano-mark status-other">○</b> 基準外</span></div>
     <p className="plot-threshold">塗りつぶした点は、調整済みp値が0.05未満、かつ|log₂ FC|が1以上の遺伝子を示します。</p>
     <svg className={`volcano-chart ${compact ? 'compact-chart' : 'wide-chart'}`} viewBox={`0 0 ${plotWidth} 330`} role="group" aria-label="48遺伝子のボルケーノプロット。点はキーボードまたは表からも選択できます。">
@@ -66,7 +65,7 @@ export default function VolcanoLab() {
       <div className="gene-detail" aria-live="polite" aria-atomic="true"><span className="lab-index">選択中の遺伝子</span><h4>{selected.id}</h4><p><span className={`volcano-mark status-${selectedStatus}`} aria-hidden="true">{selectedStatus === 'other' ? '○' : '●'}</span> {statusLabels[selectedStatus]}</p><dl><div><dt>log₂ fold change</dt><dd>{signed(selected.log2fc)}</dd></div><div><dt>Treat / Control</dt><dd>{(2 ** selected.log2fc).toFixed(2)} 倍</dd></div><div><dt>調整済みp値（BH）</dt><dd>{format(selected.padj)}</dd></div></dl></div>
     </div>
     <div className="lab-foot"><p>発現量の変化だけでは、原因や働きまでは分かりません。</p>
-      <details><summary>人工データの生成条件と計算方法</summary><p>全48遺伝子、ControlとTreatを各6反復。独立な正規乱数を整数に丸め、1未満は1とした任意単位の模擬発現量です。乱数シードは20261023。基準量は80〜200、標準偏差は基準量の0.12 / 0.25 / 0.45 / 0.65倍。Treatの期待値は、最初の24遺伝子では基準量×2のe乗（e = −1.6 + (0始まりの番号 mod 12)×0.29）、残りはe = (番号 mod 5 − 2)×0.07です。</p><p>横軸は反復平均の比のlog₂。p値は12個の値を6対6に分ける全924通りの、平均差の絶対値を使った両側の正確置換検定から計算し、全48検定をBH法で調整しています。ライブラリサイズの正規化やRNA-seq特有の分布を扱う解析ではなく、統計的な指標を読むための簡略例です。実データの解析には、その実験に合った手法が必要です。</p><p>選択中の{selected.id}：Control [{selected.control.join(', ')}]、Treat [{selected.treated.join(', ')}]。</p></details>
+      <details><summary>データの生成条件と計算方法</summary><p>全48遺伝子、ControlとTreatを各6反復。独立な正規乱数を整数に丸め、1未満は1とした任意単位の模擬発現量です。乱数シードは20261023。基準量は80〜200、標準偏差は基準量の0.12 / 0.25 / 0.45 / 0.65倍。Treatの期待値は、最初の24遺伝子では基準量×2のe乗（e = −1.6 + (0始まりの番号 mod 12)×0.29）、残りはe = (番号 mod 5 − 2)×0.07です。</p><p>横軸は反復平均の比のlog₂。p値は12個の値を6対6に分ける全924通りの、平均差の絶対値を使った両側の正確置換検定から計算し、全48検定をBH法で調整しています。ライブラリサイズの正規化やRNA-seq特有の分布を扱う解析ではなく、統計的な指標を読むための簡略例です。実データの解析には、その実験に合った手法が必要です。</p><p>選択中の{selected.id}：Control [{selected.control.join(', ')}]、Treat [{selected.treated.join(', ')}]。</p></details>
     </div>
   </div>;
 }

@@ -10,7 +10,7 @@ export default function MarketLab({ children }: { children: ReactNode }) {
 
   return <>
     <div className="lab market-lab">
-      <div className="lab-heading"><h3>冬と夏の売上金額</h3><span className="data-badge">架空データ · 全{products.length}商品</span></div>
+      <div className="lab-heading"><h3>冬と夏の売上金額</h3></div>
       <div className="market-body market-sales"><MarketSalesTable view={{ kind: 'raw' }} /></div>
     </div>
 

@@ -45,14 +45,15 @@ test('模式セットAは左に濃縮し、曲線は山から谷を通って0に
 });
 
 
-test('カレーの解説図は序論の全商品を使い、35位でESが最大になる', () => {
+test('カレーの解説図は序論の全商品を使い、34位でESが最大になる', () => {
   const ranked = rankProducts('desc');
   const scores = runningScores(ranked, curryRecipe.ids);
   assert.equal(ranked.length, 121);
   assert.equal(curryRecipe.ids.length, 11);
   const peak = Math.max(...scores);
-  assert.equal(scores.indexOf(peak), 35);
-  assert.ok(Math.abs(peak - (11 / 11 - 24 / 110)) < 1e-10);
+  assert.equal(scores.indexOf(peak), 34);
+  assert.ok(Math.abs(peak - (10 / 11 - 24 / 110)) < 1e-10);
+  assert.equal(ranked.findIndex(product => product.id === 'rice') + 1, 64);
   assert.equal(scores.at(-1), 0);
   ranked.forEach((product, index) => {
     const expected = curryRecipe.ids.includes(product.id) ? 1 / 11 : -1 / 110;

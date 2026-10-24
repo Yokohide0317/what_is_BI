@@ -26,7 +26,7 @@ export default function CurryEnrichment() {
     <div className="curry-chart-scroll">
       <svg viewBox="0 0 720 430" role="img" aria-labelledby="curry-es-title curry-es-desc">
         <title id="curry-es-title">カレーの材料は順位の上位に集まる</title>
-        <desc id="curry-es-desc">夏を冬で割った売上比の大きい順に121商品を並べた図。材料11品の位置を茶色の棒で示す。材料で11分の1上がり、材料以外で110分の1下がる曲線は、35位でES約プラス0.78となり、121位で0に戻る。</desc>
+        <desc id="curry-es-desc">夏を冬で割った売上比の大きい順に121商品を並べた図。材料11品の位置を茶色の棒で示す。材料で11分の1上がり、材料以外で110分の1下がる曲線は、34位でES約プラス0.69となり、121位で0に戻る。</desc>
         <text x="60" y="27">累積スコア（running ES）</text>
         {[-1, 0, 1].map(value => <g key={value}>
           <line x1="60" x2="660" y1={y(value)} y2={y(value)} className={value === 0 ? 'curry-zero-line' : 'curry-grid-line'} />
@@ -42,7 +42,7 @@ export default function CurryEnrichment() {
           const hit = members.has(product.id);
           return <rect key={product.id} x={x(index + 1) - 2} y={hit ? 320 : 328} width="3.5" height={hit ? 32 : 16} rx=".5" fill={hit ? '#a86130' : '#d4ddd1'}><title>{`${index + 1}位：${product.name}${hit ? '（カレーの材料）' : ''}`}</title></rect>;
         })}
-        {[1, 35, 60, 90, ranked.length].map(rank => <text key={rank} x={x(rank)} y="377" textAnchor="middle">{rank}</text>)}
+        {[1, peakRank, 60, 90, ranked.length].map(rank => <text key={rank} x={x(rank)} y="377" textAnchor="middle">{rank}</text>)}
         <text x="60" y="413">夏 ÷ 冬が大きい</text><text x="660" y="413" textAnchor="end">夏 ÷ 冬が小さい</text>
       </svg>
     </div>

@@ -15,6 +15,8 @@ test('冬と夏の121商品の売上金額を円で保持する', () => {
   assert.equal(curry.ids.length, 11);
   assert.deepEqual(['curry', 'onion', 'potato', 'carrot'].map(id => change(products.find(p => p.id === id)!)), [50, 80, 120, 180]);
   assert.deepEqual(products.find(p => p.id === 'curry'), { id: 'curry', name: 'カレールー', winter: 25000, summer: 37500 });
+  assert.deepEqual(products.find(p => p.id === 'rice'), { id: 'rice', name: '米', winter: 640000, summer: 672000 });
+  assert.equal(change(products.find(p => p.id === 'rice')!), 5);
   assert.equal(change(products.find(p => p.id === 'milk')!), 5);
   assert.equal(change(products.find(p => p.id === 'bread')!), -5);
 });
@@ -28,7 +30,7 @@ test('元データを変更せず並べ替え、一覧順に戻せる', () => {
   const ranked = rankProducts('desc');
   assert.ok(ranked.every((product, index) => index === 0 || foldChange(ranked[index - 1]) >= foldChange(product)));
   assert.equal(ranked.filter(product => curryRecipe.ids.includes(product.id)).length, 11);
-  assert.ok(ranked.slice(0, 40).filter(product => curryRecipe.ids.includes(product.id)).length === 11);
+  assert.equal(ranked.slice(0, 34).filter(product => curryRecipe.ids.includes(product.id)).length, 10);
 });
 
 test('レシピの材料は売上表に存在し、複数のレシピに同じ材料を使える', () => {

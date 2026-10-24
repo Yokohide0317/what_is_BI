@@ -1,6 +1,6 @@
 // 同じ店舗の各30日間の架空の売上金額。単位は円。
 export const products = [
-  { id: 'rice', name: '米', winter: 640000, summer: 972800 },
+  { id: 'rice', name: '米', winter: 640000, summer: 672000 },
   { id: 'bread', name: '食パン', winter: 72000, summer: 68400 },
   { id: 'pasta', name: 'パスタ', winter: 36000, summer: 39600 },
   { id: 'udon', name: 'うどん', winter: 36000, summer: 32400 },
