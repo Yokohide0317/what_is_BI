@@ -1,7 +1,7 @@
 # what_is_BI
 
-医学部1年生から読める、遺伝子セットと解析の読み方の静的教材。
-序論のページでは、冬・夏の売上金額とレシピ集から食卓の変化を考えます。次のRNA-seqのページで、遺伝子、RNA-seq、ボルケーノプロット、GSEAを解説します。解説は全体で8章です。続く解析体験ページでは、コマンドに沿って操作し、事前に計算した表やグラフを確認できます。
+データ解析の読み方を学ぶ静的教材。トップページから解析テーマを選べます。現在はRNA-seqを掲載しています。
+序論では、冬・夏の売上金額とレシピ集から食卓の変化を考えます。続くRNA-seqの解説では、遺伝子、RNA-seq、ボルケーノプロット、GSEAを扱います。解析体験では、コマンドに沿って操作し、事前に計算した表やグラフを確認できます。
 
 ## 開発
 
@@ -13,8 +13,8 @@ npm run dev
 ```
 
 Astro + MDXで本文、React + SVGで操作教材を構成しています。
-序論は `src/pages/index.mdx`（`/`）、RNA-seqの解説は `src/pages/rna-seq.mdx`（`/rna-seq/`）です。操作部品は `src/components/`、解説用の人工データは `src/data/` にあります。
-解析体験は `src/pages/simulation.astro`（`/simulation/`）です。6段階の実行、結果の絞り込み、遺伝子の選択、CSV保存、最初からの再実行に対応しています。最後の段階では、論文の図5C–Eと同じ遺伝子セットのGSEA曲線を表示し、セット内遺伝子の位置を調べられます。
+トップは `src/pages/index.astro`（`/`）、序論は `src/pages/rna-seq/introduction.mdx`（`/rna-seq/introduction/`）、RNA-seqの解説は `src/pages/rna-seq.mdx`（`/rna-seq/`）です。操作部品は `src/components/`、解説用の人工データは `src/data/` にあります。
+解析体験は `src/pages/simulation.astro`（`/simulation/`）です。6段階の実行、遺伝子の選択、CSV保存に対応しています。最後の段階では、論文の図5C–Eと同じ遺伝子セットのGSEA曲線を表示し、セット内遺伝子の位置を調べられます。
 JavaScriptが無効でも本文・表・静止図・要約が読めます。動きを減らす設定では自動ステップ再生を無効にします。
 
 ## 確認

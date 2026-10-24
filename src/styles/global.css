@@ -51,6 +51,17 @@ body {
   margin: 0;
   background: var(--bg);
 }
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+.home-page main {
+  flex: 1;
+}
+.home-page .site-footer {
+  width: 100%;
+}
 a {
   color: var(--green);
   text-underline-offset: 4px;
@@ -309,6 +320,9 @@ details[open] > summary::before {
 .page-frame.simulation-layout {
   max-width: calc(60rem + var(--gutter) * 2);
 }
+.page-frame.home-layout {
+  max-width: calc(60rem + var(--gutter) * 2);
+}
 .lesson-title {
   padding: 56px 0 0;
 }
@@ -324,8 +338,39 @@ details[open] > summary::before {
   color: var(--ink);
   margin: 0;
 }
+.with-contents .rna-hero {
+  position: relative;
+  height: clamp(320px, 36vw, 420px);
+  margin-top: 40px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+}
+.rna-hero picture,
+.rna-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rna-hero img {
+  object-fit: cover;
+  object-position: center 56%;
+}
+.rna-hero h1 {
+  position: absolute;
+  top: 36px;
+  left: 44px;
+  z-index: 1;
+  max-width: calc(100% - 88px);
+  text-shadow: 0 1px 10px var(--paper);
+}
 .reading-layout {
   padding: 40px 0 96px;
+}
+.home-layout .reading-layout {
+  padding-top: 32px;
 }
 .with-contents .reading-layout {
   display: grid;
@@ -424,6 +469,55 @@ details[open] > summary::before {
 }
 .lesson-body > section > p {
   margin-bottom: 20px;
+}
+.topic-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--paper);
+}
+.topic-card-copy {
+  padding: clamp(28px, 4vw, 48px);
+}
+.lesson-body .topic-card h2 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 3vw, 34px);
+  line-height: 1.3;
+}
+.topic-card-copy p {
+  max-width: 32rem;
+  margin: 0;
+  line-height: 1.9;
+}
+.topic-links {
+  display: grid;
+  align-content: center;
+  border-left: 1px solid var(--line);
+  background: var(--surface);
+}
+.topic-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 16px 24px;
+  color: var(--ink);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  text-decoration: none;
+}
+.topic-links a + a {
+  border-top: 1px solid var(--line);
+}
+.topic-links a:hover {
+  background: var(--surface-strong);
+  color: var(--green);
+}
+.topic-links .topic-start {
+  color: var(--green);
 }
 .lesson-body p {
   overflow-wrap: anywhere;
@@ -560,6 +654,7 @@ caption {
   text-align: left;
 }
 .table-scroll {
+  position: relative;
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -1391,11 +1486,38 @@ caption {
   .with-contents .lesson-title {
     padding: 32px 0 0;
   }
+  .with-contents .rna-hero {
+    height: clamp(240px, 58vw, 330px);
+    margin-top: 24px;
+    padding: 0;
+  }
+  .rna-hero h1 {
+    top: 20px;
+    left: 22px;
+    max-width: calc(100% - 44px);
+  }
   .lesson-title h1 {
     font-size: 26px;
   }
   .reading-layout {
     padding: 24px 0 64px;
+  }
+  .home-layout .reading-layout {
+    padding-top: 24px;
+  }
+  .topic-card {
+    grid-template-columns: 1fr;
+  }
+  .topic-card-copy {
+    padding: 28px 24px;
+  }
+  .topic-links {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .topic-links a {
+    min-height: 56px;
+    padding: 12px 24px;
   }
   .with-contents .reading-layout {
     display: block;

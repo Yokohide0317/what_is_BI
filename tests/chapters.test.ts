@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const page = readFileSync(new URL('../src/pages/index.mdx', import.meta.url), 'utf8');
+const homePage = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
+const page = readFileSync(new URL('../src/pages/rna-seq/introduction.mdx', import.meta.url), 'utf8');
 const rnaPage = readFileSync(new URL('../src/pages/rna-seq.mdx', import.meta.url), 'utf8');
 const referencesPage = readFileSync(new URL('../src/pages/references.mdx', import.meta.url), 'utf8');
 const layout = readFileSync(new URL('../src/layouts/Lesson.astro', import.meta.url), 'utf8');
@@ -22,9 +23,17 @@ test('序論とRNA-seqを別ページに分け、8章の目次と本文を一致
   assert.match(rnaPage, /<GeneCounts/);
   assert.match(rnaPage, /<GeneRankLab/);
   assert.match(layout, /href="\/rna-seq\/" rel="next"/);
-  assert.match(layout, /href="\/" rel="prev"/);
+  assert.match(layout, /href="\/rna-seq\/introduction\/" rel="prev"/);
   assert.match(layout, /href="\/simulation\/" rel="next"/);
   assert.doesNotMatch(rnaPage, /<section id="(?:sets|ora|paper)"/);
+});
+
+test('トップからRNA-seqの序論・解説・解析体験に進める', () => {
+  assert.match(homePage, /href="\/rna-seq\/introduction\/"/);
+  assert.match(homePage, /href="\/rna-seq\/"/);
+  assert.match(homePage, /href="\/simulation\/"/);
+  assert.match(layout, /isHome \? '解析を選ぶ'/);
+  assert.match(layout, /href="\/" aria-current=\{isHome/);
 });
 
 test('用語と参考文献を別ページにする', () => {
