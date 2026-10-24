@@ -39,8 +39,8 @@ const showContents = isRnaSeq && pageChapters.length > 1;
     </header>
     <main id="main">
       <div class:list={['page-frame', { 'with-contents': showContents, 'simulation-layout': isSimulation, 'home-layout': isHome }]}>
-        {!isReferences && (isRnaSeq
-          ? <header class="lesson-title rna-hero">
+        {!isReferences && (isIntroduction
+          ? <header class="lesson-title intro-hero">
               <Picture
                 src={summerFeast}
                 formats={['webp']}
