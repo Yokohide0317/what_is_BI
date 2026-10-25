@@ -1,0 +1,85 @@
+---
+import Lesson from '../layouts/Lesson.astro';
+
+const repo = 'Yokohide0317/what_is_BI';
+const branch = 'main';
+const notebooks = [
+  { file: '01_Introduction.ipynb', title: 'データを読む', topic: 'カウント表の読み方', upload: null, download: null },
+  { file: '02_QC_PCA.ipynb', title: '試料の品質と似かた', topic: '合計・検出遺伝子数・PCA', upload: null, download: 'results_02.zip' },
+  { file: '03_DESeq2.ipynb', title: '2つの条件を比べる', topic: 'DESeq2による比較', upload: 'results_02.zip', download: 'results_03.zip' },
+  { file: '04_Visualization.ipynb', title: '結果を図にする', topic: 'ボルケーノプロット・ヒートマップ', upload: 'results_03.zip', download: 'results_04.zip' },
+  { file: '05_GSEA.ipynb', title: '遺伝子のまとまりで見る', topic: 'GSEA', upload: 'results_04.zip', download: 'results_05.zip' },
+];
+const colabUrl = (file: string) => `https://colab.research.google.com/github/${repo}/blob/${branch}/public/colab/${file}`;
+---
+<Lesson>
+  <section>
+    <h2>自分で解析する</h2>
+    <p>解析体験では、事前に計算した結果を表示しました。ここでは同じ6サンプルのカウント表を使い、Google ColabでPythonのコードを自分で実行します。カウント表を読むところから、DESeq2による比較、ボルケーノプロット、GSEAまでを、5本のノートブックで順に進めます。</p>
+    <p>Colabを使うにはGoogleアカウントが要ります。パソコンにソフトを入れる必要はありません。</p>
+  </section>
+
+  <section>
+    <h2>進め方</h2>
+    <ol>
+      <li>下の一覧からノートブックを開きます。「このノートブックはGoogleが作成したものではありません」という警告が出たら、「このまま実行」を押します。</li>
+      <li>上のセルから順に実行します（Shift + Enter）。</li>
+      <li>02〜04は、最後のセルで結果のzipがダウンロードされます。消さずに保存してください。</li>
+      <li>次のノートブックを開いたら、最初のセルでそのzipをアップロードします。</li>
+    </ol>
+    <p>Colabのページを閉じると、作ったファイルは消えます。zipをダウンロードしてから閉じてください。</p>
+  </section>
+
+  <section>
+    <h2>ノートブック</h2>
+    <ol class="colab-list">
+      {notebooks.map(nb => (
+        <li class="colab-card">
+          <div class="colab-card-head">
+            <span class="colab-num">{nb.file.slice(0, 2)}</span>
+            <div>
+              <h3>{nb.title}</h3>
+              <p>{nb.topic}</p>
+            </div>
+          </div>
+          <dl class="colab-io">
+            <div><dt>最初にアップロード</dt><dd>{nb.upload ? <code>{nb.upload}</code> : 'なし'}</dd></div>
+            <div><dt>最後にダウンロード</dt><dd>{nb.download ? <code>{nb.download}</code> : 'なし'}</dd></div>
+          </dl>
+          <div class="colab-actions">
+            <a class="colab-open" href={colabUrl(nb.file)} target="_blank" rel="noopener">Colabで開く<span class="sr-only">（{nb.file}、新しいタブ）</span></a>
+            <a href={`/colab/${nb.file}`} download>ipynbをダウンロード</a>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="caption">Colabで開けないときは、ipynbをダウンロードし、Colabの「ファイル」→「ノートブックをアップロード」から開いてください。</p>
+  </section>
+
+  <section>
+    <h2>解析体験との違い</h2>
+    <p>解析体験の表は、SalmonのscaledTPMを整数に丸めた値を、RのDESeq2で解析したものです。ノートブックでは、同じサンプルのリードをSTARとRSEMで定量し直したカウント表（タンパク質をコードする20,331遺伝子）を、PythonのPyDESeq2で解析します。GSEAも、遺伝子の並べ方（DESeq2の統計量）と遺伝子セット（MSigDBのHallmark）が解析体験と異なります。そのため、遺伝子の数やpadj、NESなどの値は解析体験と一致しません。</p>
+  </section>
+</Lesson>
+
+<style>
+  .colab-list { list-style: none; padding: 0; display: grid; gap: 12px; margin: 16px 0; }
+  :global(.lesson-body) .colab-list li { margin: 0; }
+  .colab-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); padding: 16px 20px; }
+  .colab-card-head { display: flex; align-items: flex-start; gap: 14px; }
+  .colab-num { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; background: var(--green-tint); color: var(--green); font-weight: 700; font-variant-numeric: tabular-nums; }
+  :global(.lesson-body) .colab-card h3 { margin: 0; font-size: var(--fs-h3); color: var(--ink); }
+  .colab-card-head p { margin: 2px 0 0; color: var(--muted); font-size: var(--fs-md); }
+  .colab-io { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 12px 0 0; font-size: var(--fs-sm); }
+  .colab-io div { display: flex; gap: 8px; }
+  .colab-io dt { color: var(--muted); }
+  .colab-io dd { margin: 0; }
+  .colab-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: 14px; }
+  .colab-actions a { font-size: var(--fs-md); }
+  .colab-actions .colab-open { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--radius-sm); background: var(--green); color: #fff; font-weight: 700; text-decoration: none; }
+  .colab-actions .colab-open:hover { background: var(--green-strong); }
+  @media (max-width: 520px) {
+    .colab-card { padding: 14px 16px; }
+    .colab-io { flex-direction: column; }
+  }
+</style>
