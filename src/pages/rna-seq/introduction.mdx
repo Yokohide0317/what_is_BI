@@ -1,6 +1,8 @@
 ---
 layout: ../../layouts/Lesson.astro
 ---
+import { Picture } from 'astro:assets';
+import seasonalMarket from '../../assets/seasonal-market.jpg';
 import MarketLab from '../../components/MarketLab';
 import MarketChange from '../../components/MarketChange.astro';
 import MarketRanking from '../../components/MarketRanking';
@@ -9,6 +11,21 @@ import MarketBridge from '../../components/MarketBridge.astro';
 <section id="market">
 
 ## 1. 序論：夏の食卓で何が流行っている？
+
+<figure className="intro-overview-figure">
+  <a href={seasonalMarket.src} target="_blank" rel="noopener" aria-label="季節と食卓の図を拡大する">
+    <Picture
+      src={seasonalMarket}
+      formats={['webp']}
+      fallbackFormat="jpeg"
+      widths={[400, 800, 1200, 1448]}
+      sizes="(max-width: 760px) calc(100vw - 32px), 1080px"
+      alt="冬と夏の町の食材の売上から、季節による食卓の変化を考える図。町の各家庭を細胞にたとえ、夏のそうめんや冷たい食卓、冬の鍋や温かい食卓を示している。"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+</figure>
 
 夏は、冬に比べて食卓でなにが流行っているのだろうか？
 

@@ -346,6 +346,18 @@ details[open] > summary::before {
   color: var(--ink);
   margin: 0;
 }
+.intro-overview-figure {
+  margin: 24px 0;
+}
+.intro-overview-figure a,
+.intro-overview-figure picture {
+  display: block;
+}
+.intro-overview-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .intro-hero picture {
   display: block;
   margin-top: 28px;
