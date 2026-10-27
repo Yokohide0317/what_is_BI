@@ -32,7 +32,7 @@ test('トップはRNA-seqの序論を入口にし、ヘッダーに教材メニ�
   assert.match(homePage, /href="\/rna-seq\/introduction\/"/);
   assert.doesNotMatch(homePage, /href="\/(?:rna-seq\/|simulation\/)"/);
   assert.match(layout, /isHome \? '解析を選ぶ'/);
-  assert.match(layout, /\{!isHome && <nav aria-label="サイト内">/);
+  assert.match(layout, /\{!isHome && <details class="site-menu">/);
 });
 
 test('用語と参考文献を別ページにする', () => {
