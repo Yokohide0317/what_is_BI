@@ -983,87 +983,13 @@ caption {
   background: var(--paper);
   text-align: center;
 }
-.analogy-panel > figcaption {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 18px;
-  color: var(--ink);
+.analogy-panel {
+  padding: 12px;
 }
-.matrix-diagram {
-  display: grid;
-  grid-template-columns: auto repeat(var(--matrix-columns), minmax(0, 1fr));
-  gap: 4px;
-  font-size: var(--fs-xs);
-}
-.matrix-diagram strong,
-.matrix-diagram span {
-  padding: 5px;
-  font-weight: 400;
-}
-.matrix-diagram strong {
-  padding-inline: 0;
-  align-self: end;
-  font-size: var(--fs-xs);
-}
-.matrix-replicates strong {
-  writing-mode: vertical-rl;
-  white-space: nowrap;
-  justify-self: center;
-}
-.matrix-diagram i {
-  background: var(--green-tint);
-  border: 1px solid #d0dccb;
-  border-radius: 2px;
-}
-.matrix-diagram i.matrix-member {
-  background: #f1e2cb;
-  border-color: #dac3a4;
-}
-.matrix-value {
-  font-size: var(--fs-sm);
-  margin: 10px 0 0;
-  color: var(--muted);
-}
-.analogy-plus,
-.analogy-arrow {
+.analogy-panel img {
   display: block;
-  margin: 10px 0;
-  color: #7f9279;
-  font-size: 22px;
-  line-height: 1.2;
-}
-.known-set {
-  padding: 14px;
-  border: 1px dashed var(--line-strong);
-  border-radius: 8px;
-  display: grid;
-  gap: 4px;
-  font-size: var(--fs-md);
-}
-.known-set > span:last-child {
-  font-size: var(--fs-sm);
-  line-height: 1.7;
-  color: var(--muted);
-}
-.set-symbol {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 4px;
-}
-.set-symbol i {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #c7884e;
-}
-.analogy-question {
-  padding: 10px;
-  margin: 0;
-  font-size: var(--fs-md);
-  font-weight: 700;
-  color: var(--green);
-  background: var(--green-tint);
+  width: 100%;
+  height: auto;
   border-radius: var(--radius-sm);
 }
 
