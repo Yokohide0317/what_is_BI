@@ -36,7 +36,10 @@ const showContents = isRnaSeq && pageChapters.length > 1;
     <a class="skip-link" href="#main">本文へスキップ</a>
     <header class="site-header">
       <a href="/" class="brand" aria-label="what is BI トップ"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span>what is <b>BI</b><span class="brand-dot">.</span></a>
-      {!isHome && <nav aria-label="サイト内"><a href="/">トップ</a><a href="/rna-seq/introduction/" aria-current={isIntroduction ? 'page' : undefined}>序論</a><a href="/rna-seq/" aria-current={isRnaSeq ? 'page' : undefined}>RNA-seq</a><a href="/simulation/" aria-current={isSimulation ? 'page' : undefined}>解析体験</a><a href="/references/#glossary">用語</a><a href="/references/#sources">参考文献</a></nav>}
+      {!isHome && <details class="site-menu">
+        <summary aria-label="サイト内メニュー"><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary>
+        <nav aria-label="サイト内"><a href="/rna-seq/introduction/" aria-current={isIntroduction ? 'page' : undefined}>序論</a><a href="/rna-seq/" aria-current={isRnaSeq ? 'page' : undefined}>RNA-seq</a><a href="/simulation/" aria-current={isSimulation ? 'page' : undefined}>解析体験</a><a href="/references/#glossary">用語</a><a href="/references/#sources">参考文献</a></nav>
+      </details>}
     </header>
     <main id="main">
       <div class:list={['page-frame', { 'with-contents': showContents, 'simulation-layout': isSimulation, 'home-layout': isHome }]}>
@@ -64,8 +67,8 @@ const showContents = isRnaSeq && pageChapters.length > 1;
             <slot />
             {(isIntroduction || isRnaSeq) && <nav class="lesson-pagination" aria-label="ページ間の移動">
               {isIntroduction
-                ? <a href="/rna-seq/" rel="next">次へ：RNA-seqとは <span aria-hidden="true">→</span></a>
-                : <><a href="/rna-seq/introduction/" rel="prev"><span aria-hidden="true">←</span> 序論：夏の食卓へ戻る</a><a href="/simulation/" rel="next">次へ：RNA-seq解析体験 <span aria-hidden="true">→</span></a></>}
+                ? <a href="/rna-seq/" rel="next">RNA-seqとは <span aria-hidden="true">→</span></a>
+                : <><a href="/rna-seq/introduction/" rel="prev"><span aria-hidden="true">←</span> 序論：夏の食卓</a><a href="/simulation/" rel="next">RNA-seq解析体験 <span aria-hidden="true">→</span></a></>}
             </nav>}
           </article>
         </div>
@@ -73,6 +76,15 @@ const showContents = isRnaSeq && pageChapters.length > 1;
     </main>
     <footer class="site-footer"><a class="brand" href="/">what is <b>BI</b><span class="brand-dot">.</span></a><nav aria-label="フッター"><a href="/policy/" aria-current={isPolicy ? 'page' : undefined}>サイトポリシー</a><a href="#main">ページの先頭へ ↑</a></nav></footer>
     <script>
+      const siteMenu = document.querySelector<HTMLDetailsElement>('.site-menu');
+      if (siteMenu) {
+        document.addEventListener('click', event => {
+          if (siteMenu.open && !siteMenu.contains(event.target as Node)) siteMenu.open = false;
+        });
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape' && siteMenu.open) siteMenu.open = false;
+        });
+      }
       const links = document.querySelectorAll<HTMLAnchorElement>('.contents a');
       const observer = new IntersectionObserver(entries => {
         for (const entry of entries) {
