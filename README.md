@@ -3,6 +3,16 @@
 データ解析の読み方を学ぶ静的教材。トップページから解析テーマを選べます。現在はRNA-seqを掲載しています。
 序論では、冬・夏の売上金額とレシピ集から食卓の変化を考えます。続くRNA-seqの解説では、遺伝子、RNA-seq、ボルケーノプロット、GSEAを扱います。解析体験では、コマンドに沿って操作し、事前に計算した表やグラフを確認できます。
 
+## 公開ページ
+
+- サイト: https://what-is-bi.pages.dev/
+- Google Colab:
+  - [01 RNA-seq のデータを見てみる](https://colab.research.google.com/github/Yokohide0317/what_is_BI/blob/main/public/colab/01_Introduction.ipynb)
+  - [02 PCA: 試料の品質と、試料どうしの類似性](https://colab.research.google.com/github/Yokohide0317/what_is_BI/blob/main/public/colab/02_QC_PCA.ipynb)
+  - [03 DESeq2 で2つの条件を比較する](https://colab.research.google.com/github/Yokohide0317/what_is_BI/blob/main/public/colab/03_DESeq2.ipynb)
+  - [04 結果を図にする](https://colab.research.google.com/github/Yokohide0317/what_is_BI/blob/main/public/colab/04_Visualization.ipynb)
+  - [05 遺伝子のまとまりで見る（GSEA）](https://colab.research.google.com/github/Yokohide0317/what_is_BI/blob/main/public/colab/05_GSEA.ipynb)
+
 ## 開発
 
 Node.js 22.23.4以上を使用します。
@@ -32,7 +42,6 @@ GitHub Actionsでもテスト・ESLint（TS/TSXとJSXアクセシビリティ）
 `dist/` が出力先です。Cloudflare Pages等ではビルドコマンド `npm run build`、出力先 `dist` を指定できます。
 このリポジトリにデプロイの自動化・外部サービス設定は含めていません。
 本文フォントはGoogle Fontsから取得し、接続できない場合はシステムフォントで表示します。
-
 ## 日本語の本文を確認する
 
 本文、UI、README、PR説明の日本語を書く・レビューするときは、[natural-japanese の SKILL.md](.agents/skills/natural-japanese/SKILL.md)を読み、そこにあるレビュー手順を使います。科学的な意味、数値データ、不確実性は変えません。

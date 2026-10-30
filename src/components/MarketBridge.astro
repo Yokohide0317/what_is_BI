@@ -1,26 +1,21 @@
 ---
 const examples = [
-  { title: 'スーパーの売上', row: '商品', columns: ['冬', '夏'], value: '売上金額（円）', collection: 'レシピ集', members: '料理ごとの材料', question: 'どんな料理が流行っている？' },
-  { title: 'RNA-seqのデータ', row: '遺伝子', columns: ['Control-1', 'Control-2', 'Control-3', 'Treat-1', 'Treat-2', 'Treat-3'], value: 'RNA由来のカウント', collection: '遺伝子セット', members: 'これまでの研究で明らかになった、共通の働きに関わる遺伝子', question: 'どんな働きに関わる遺伝子が変化した？' },
+  {
+    src: '/images/market-to-dish.png',
+    label: '食材の売上とレシピ集の図',
+    alt: 'スーパーで見えるデータは食材ごとの冬・夏の売上の増減。カレー・そうめん・シチューなどレシピ集の材料セットと照らし合わせると、今どんな料理が流行っているかを推測できる、という考え方の図。',
+  },
+  {
+    src: '/images/rna-seq-gene-set.png',
+    label: 'RNA-seqと遺伝子セットの図',
+    alt: 'RNA-seqで見えるデータは各サンプルの遺伝子の発現カウント。免疫応答・細胞周期・代謝など遺伝子セットと照らし合わせると、どんな働きに関わる遺伝子が変化したかを推定できる、という考え方の図。',
+  },
 ];
 ---
 
 <h3>データを、既知の集まりと照らし合わせる</h3>
 <div class="market-analogy">
   {examples.map(example => <figure class="analogy-panel">
-    <figcaption>{example.title}</figcaption>
-    <div class:list={['matrix-diagram', { 'matrix-replicates': example.columns.length > 2 }]} style={`--matrix-columns: ${example.columns.length}`} role="img" aria-label={`1行は1${example.row}、列は${example.columns.join('、')}。各マスに${example.value}を入れます。`}>
-      <span></span>{example.columns.map(column => <strong>{column.includes('-') ? <>{column.split('-')[0]}-<wbr />{column.split('-')[1]}</> : column}</strong>)}
-      {[1, 2, 3].map(index => <><span>{example.row}{index}</span>{example.columns.map(() => <i class:list={{ 'matrix-member': index !== 2 }} aria-hidden="true"></i>)}</>)}
-    </div>
-    <p class="matrix-value">{example.value}</p>
-    <span class="analogy-plus" aria-hidden="true">＋</span>
-    <div class="known-set">
-      <span class="set-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-      <strong>{example.collection}</strong>
-      <span>{example.members}</span>
-    </div>
-    <span class="analogy-arrow" aria-hidden="true">↓</span>
-    <p class="analogy-question">{example.question}</p>
+    <a href={example.src} target="_blank" rel="noopener" aria-label={`${example.label}を拡大する`}><img src={example.src} width="1672" height="941" loading="lazy" alt={example.alt} /></a>
   </figure>)}
 </div>
